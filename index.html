@@ -127,7 +127,7 @@ section { padding: 140px 56px; }
 .divider { width: 40px; height: 1px; background: var(--gold); margin: 32px 0; }
 
 /* REVEAL */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
+.reveal { opacity: 1; transform: translateY(0); transition: opacity 0.75s ease, transform 0.75s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 .rd1 { transition-delay: 0.1s; }
 .rd2 { transition-delay: 0.2s; }
@@ -228,7 +228,7 @@ section { padding: 140px 56px; }
 .ethics-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
 .ethics-visual { background: linear-gradient(160deg, #0f0e0c 0%, #0d0b09 100%); display: flex; align-items: center; justify-content: center; margin: -140px 0 -140px -56px; position: relative; overflow: hidden; min-height: 700px; }
 .ethics-visual::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(184,154,106,0.06) 1px, transparent 1px); background-size: 28px 28px; }
-.ethics-quote-text { position: relative; z-index: 1; font-family: 'Cormorant Garamond', serif; font-size: clamp(20px, 2.2vw, 32px); font-style: italic; font-weight: 300; color: rgba(184,154,106,0.5); text-align: center; padding: 60px; line-height: 1.5; }
+.ethics-quote-text { position: relative; z-index: 1; font-family: 'Cormorant Garamond', serif; font-size: clamp(20px, 2.2vw, 32px); font-style: italic; font-weight: 300; color: rgba(184,154,106,0.8); text-align: center; padding: 60px; line-height: 1.5; }
 .ethics-body { padding: 80px 0 80px 80px; display: flex; flex-direction: column; justify-content: center; }
 .pillar { padding: 26px 0; border-bottom: 1px solid rgba(184,154,106,0.12); display: grid; grid-template-columns: 20px 1fr; gap: 20px; align-items: start; }
 .pillar:first-of-type { border-top: 1px solid rgba(184,154,106,0.12); }
