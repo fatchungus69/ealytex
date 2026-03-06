@@ -418,6 +418,208 @@ section { padding: 140px 56px; }
 .loc-item { display: flex; align-items: center; gap: 20px; padding: 0 28px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ash); }
 .loc-item em { color: var(--gold); font-style: normal; }
 
+/* NEWS */
+#news { background: var(--ink); }
+.news-header { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; margin-bottom: 72px; }
+.news-sub { font-size: 15px; line-height: 1.8; color: rgba(242,237,230,0.45); }
+.news-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2px; background: rgba(184,154,106,0.08); }
+
+.news-card {
+  background: var(--dark-mid);
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s;
+  min-height: 420px;
+}
+
+/* Per-card textures */
+.news-card:nth-child(1) { background: #141210; }
+.news-card:nth-child(1)::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(184,154,106,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+.news-card:nth-child(2) { background: #121414; }
+.news-card:nth-child(2)::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(184,154,106,0.04) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(184,154,106,0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+.news-card:nth-child(3) { background: #131211; }
+.news-card:nth-child(3)::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(184,154,106,0.03) 0px,
+    rgba(184,154,106,0.03) 1px,
+    transparent 1px,
+    transparent 20px
+  );
+  pointer-events: none;
+}
+
+/* Top accent line */
+.news-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  z-index: 2;
+}
+.news-card:hover::before { transform: scaleX(1); }
+.news-card:hover { background: #1a1714 !important; }
+
+/* Pull quote overlay */
+.news-pull-quote {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.92) 60%, rgba(10,10,10,0.7) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 44px 40px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  z-index: 3;
+}
+.news-card:hover .news-pull-quote { opacity: 1; transform: translateY(0); }
+.pq-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 72px;
+  color: var(--gold);
+  opacity: 0.3;
+  line-height: 0.6;
+  margin-bottom: 20px;
+}
+.pq-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgba(242,237,230,0.9);
+  margin-bottom: 24px;
+}
+.news-card:first-child .pq-text { font-size: 26px; }
+.pq-source {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pq-source::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+.pq-cta {
+  margin-top: 28px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--gold);
+  padding: 10px 20px;
+  width: fit-content;
+  transition: background 0.3s;
+}
+.pq-cta:hover { background: var(--gold-light); }
+
+/* Card content */
+.news-card-top { display: flex; flex-direction: column; gap: 20px; position: relative; z-index: 1; }
+.news-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(184,154,106,0.3);
+  padding: 6px 12px;
+  width: fit-content;
+}
+.news-tag-dot { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+.news-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--bone);
+}
+.news-card:first-child .news-headline { font-size: 30px; }
+.news-excerpt {
+  font-size: 13px;
+  line-height: 1.8;
+  color: rgba(242,237,230,0.45);
+  margin-top: 4px;
+}
+
+/* Stat callout on featured card */
+.news-stat-row {
+  display: flex;
+  gap: 2px;
+  margin-top: 8px;
+}
+.news-stat {
+  flex: 1;
+  background: rgba(184,154,106,0.07);
+  border: 1px solid rgba(184,154,106,0.15);
+  padding: 16px 14px;
+  text-align: center;
+}
+.news-stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+}
+.news-stat-lbl {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ash);
+  display: block;
+  margin-top: 4px;
+}
+
+.news-card-bottom { display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1; }
+.news-meta { display: flex; align-items: center; justify-content: space-between; }
+.news-source { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(242,237,230,0.3); }
+.news-date { font-size: 11px; letter-spacing: 0.12em; color: rgba(242,237,230,0.2); }
+.news-link-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.3s, transform 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.news-link-label::after { content: '→'; }
+.news-card:hover .news-link-label { opacity: 1; transform: translateX(0); }
+
 /* CONTACT */
 #contact { background: var(--cream); color: var(--ink); }
 #contact .section-tag { color: #7a6a50; }
@@ -482,6 +684,7 @@ footer { background: var(--ink); padding: 48px 56px; display: flex; align-items:
     <li><a href="#products">Products</a></li>
     <li><a href="#ethics">Ethics</a></li>
     <li><a href="#factories">Factories</a></li>
+    <li><a href="#news">News</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Get In Touch</a>
 </nav>
@@ -871,6 +1074,93 @@ footer { background: var(--ink); padding: 48px 56px; display: flex; align-items:
   </div>
 </section>
 
+<!-- NEWS -->
+<section id="news">
+  <div class="news-header">
+    <div>
+      <div class="section-tag reveal">In The Press</div>
+      <h2 class="section-heading reveal rd1">Ealytex in the <em>News</em></h2>
+    </div>
+    <p class="news-sub reveal">Recognition, leadership, and industry insight — from the organizations and publications that cover our world.</p>
+  </div>
+
+  <div class="news-grid">
+
+    <!-- Card 1 — Featured/large -->
+    <a class="news-card reveal" href="https://www.linkedin.com/posts/the-american-chamber-of-commerce-in-cambodia-association_amchamcambodia-csrprojects-activity-7416373379169034240-8DDM" target="_blank" rel="noopener">
+      <div class="news-card-top">
+        <div class="news-tag"><span class="news-tag-dot"></span>Award</div>
+        <div class="news-headline">AmCham 7th Annual CSR Awardee — Community &amp; Social Impact</div>
+        <div class="news-excerpt">AmCham Cambodia recognized Ealytex for its outstanding commitment to Employee Empowerment &amp; Community Engagement, making a meaningful difference across Cambodia.</div>
+        <div class="news-stat-row">
+          <div class="news-stat"><span class="news-stat-num" data-target="7">0</span><span class="news-stat-lbl">Annual Award</span></div>
+          <div class="news-stat"><span class="news-stat-num" data-target="3113">0</span><span class="news-stat-lbl">Workers Empowered</span></div>
+          <div class="news-stat"><span class="news-stat-num" data-target="2020">0</span><span class="news-stat-lbl">Est. Cambodia</span></div>
+        </div>
+      </div>
+      <div class="news-card-bottom">
+        <div class="news-meta">
+          <span class="news-source">AmCham Cambodia</span>
+          <span class="news-date">2025</span>
+        </div>
+        <span class="news-link-label">View on LinkedIn</span>
+      </div>
+      <!-- Pull quote overlay -->
+      <div class="news-pull-quote">
+        <div class="pq-mark">"</div>
+        <div class="pq-text">Your outstanding commitment to Employee Empowerment &amp; Community Engagement continues to make a meaningful difference in improving lives across Cambodia.</div>
+        <div class="pq-source">AmCham Cambodia</div>
+        <div class="pq-cta">View Recognition →</div>
+      </div>
+    </a>
+
+    <!-- Card 2 -->
+    <a class="news-card reveal rd1" href="https://www.linkedin.com/posts/international-business-chamber-of-cambodia-ibc_activity-7414165079174078464" target="_blank" rel="noopener">
+      <div class="news-card-top">
+        <div class="news-tag"><span class="news-tag-dot"></span>Leadership</div>
+        <div class="news-headline">Jason Ma Named a Top Industry Expert for 2026</div>
+        <div class="news-excerpt">IBC Cambodia selected Ealytex founder &amp; CEO Jason Ma as one of 8 leading garment industry experts to share their 2026 outlook at the IBC Open Meeting in Phnom Penh.</div>
+      </div>
+      <div class="news-card-bottom">
+        <div class="news-meta">
+          <span class="news-source">IBC Cambodia</span>
+          <span class="news-date">Jan 2026</span>
+        </div>
+        <span class="news-link-label">View on LinkedIn</span>
+      </div>
+      <div class="news-pull-quote">
+        <div class="pq-mark">"</div>
+        <div class="pq-text">Jason Ma — Founder and CEO of Ealytex Global Inc. — selected as one of 8 leading industry experts shaping the garment sector's view for 2026.</div>
+        <div class="pq-source">IBC Cambodia · Jan 2026</div>
+        <div class="pq-cta">View Feature →</div>
+      </div>
+    </a>
+
+    <!-- Card 3 -->
+    <a class="news-card reveal rd2" href="https://lnkd.in/eG4PVQRz" target="_blank" rel="noopener">
+      <div class="news-card-top">
+        <div class="news-tag"><span class="news-tag-dot"></span>Industry Insight</div>
+        <div class="news-headline">Garment Sector Faces Higher Expectations &amp; Smaller Orders</div>
+        <div class="news-excerpt">Jason Ma's remarks at IBC's Industry View event — long-term growth in garments is increasingly tied to execution, consistency, and clear buyer communication.</div>
+      </div>
+      <div class="news-card-bottom">
+        <div class="news-meta">
+          <span class="news-source">Cambodia Investment Review</span>
+          <span class="news-date">Jan 2026</span>
+        </div>
+        <span class="news-link-label">View on LinkedIn</span>
+      </div>
+      <div class="news-pull-quote">
+        <div class="pq-mark">"</div>
+        <div class="pq-text">Garment manufacturers face smaller orders and higher expectations — long-term growth is increasingly tied to execution, consistency, and clear buyer communication.</div>
+        <div class="pq-source">Jason Ma · Cambodia Investment Review</div>
+        <div class="pq-cta">Read Coverage →</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="section-tag reveal">Get In Touch</div>
@@ -964,7 +1254,7 @@ footer { background: var(--ink); padding: 48px 56px; display: flex; align-items:
   animateRing();
 
   // Hover effect on interactive elements
-  const hoverEls = document.querySelectorAll('a, button, .adv-card, .product-card, .factory-card, .cert-badge, .nav-cta, .tl-node');
+  const hoverEls = document.querySelectorAll('a, button, .adv-card, .product-card, .factory-card, .cert-badge, .nav-cta, .tl-node, .news-card');
   hoverEls.forEach(el => {
     el.addEventListener('mouseenter', () => { dot.classList.add('hovering'); ring.classList.add('hovering'); });
     el.addEventListener('mouseleave', () => { dot.classList.remove('hovering'); ring.classList.remove('hovering'); });
@@ -974,7 +1264,31 @@ footer { background: var(--ink); padding: 48px 56px; display: flex; align-items:
   document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
   document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; });
 
-  // Kick off reveal observers
+  // News stat counter animation
+  const statNums = document.querySelectorAll('.news-stat-num[data-target]');
+  if (statNums.length) {
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.target);
+          const duration = 1800;
+          const start = performance.now();
+          const animate = (now) => {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(eased * target).toLocaleString();
+            if (progress < 1) requestAnimationFrame(animate);
+            else el.textContent = target.toLocaleString();
+          };
+          requestAnimationFrame(animate);
+          counterObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    statNums.forEach(el => counterObserver.observe(el));
+  }
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 </script>
 </body>
