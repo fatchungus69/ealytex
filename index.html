@@ -8,1108 +8,291 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #0a0a0a;
-    --bone: #f2ede6;
-    --cream: #faf8f4;
-    --gold: #b89a6a;
-    --gold-light: #d4b896;
-    --ash: #8a8580;
-    --dark-mid: #1a1816;
-    --mid: #2e2b28;
-  }
+:root {
+  --ink: #0a0a0a;
+  --bone: #f2ede6;
+  --cream: #faf8f4;
+  --gold: #b89a6a;
+  --gold-light: #d4b896;
+  --ash: #8a8580;
+  --dark-mid: #1a1816;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--ink); color: var(--bone); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 28px 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.5s, padding 0.4s;
+}
+nav.scrolled {
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(16px);
+  padding: 18px 56px;
+  border-bottom: 1px solid rgba(184,154,106,0.15);
+}
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.15em; color: var(--bone); text-decoration: none; }
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ash); text-decoration: none; transition: color 0.3s; }
+.nav-links a:hover { color: var(--bone); }
+.nav-cta { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); background: var(--gold); padding: 10px 24px; text-decoration: none; transition: background 0.3s; }
+.nav-cta:hover { background: var(--gold-light); }
 
-  html { scroll-behavior: smooth; }
+/* HERO */
+#hero { position: relative; height: 100vh; min-height: 700px; display: flex; align-items: center; overflow: hidden; }
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 70% 50%, rgba(184,154,106,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, rgba(184,154,106,0.05) 0%, transparent 50%),
+    linear-gradient(160deg, #0f0e0c 0%, #0a0a0a 50%, #111009 100%);
+}
+.hero-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(184,154,106,0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.hero-watermark {
+  position: absolute; right: -20px; top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(160px, 22vw, 340px);
+  color: rgba(184,154,106,0.04);
+  letter-spacing: -0.02em;
+  pointer-events: none;
+  white-space: nowrap; line-height: 1;
+  user-select: none;
+}
+.hero-content { position: relative; padding: 0 56px; max-width: 900px; }
+.hero-eyebrow {
+  font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 28px;
+  opacity: 0; transform: translateY(20px);
+  animation: fadeUp 0.8s ease 0.3s forwards;
+}
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(56px, 8vw, 120px);
+  font-weight: 300; line-height: 0.95; letter-spacing: -0.02em;
+  margin-bottom: 40px;
+}
+.hero-title .line { display: block; overflow: hidden; }
+.hero-title .line span {
+  display: block;
+  opacity: 0; transform: translateY(100%);
+  animation: slideUp 1s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+.hero-title .line:nth-child(1) span { animation-delay: 0.5s; }
+.hero-title .line:nth-child(2) span { animation-delay: 0.65s; }
+.hero-title .line:nth-child(3) span { animation-delay: 0.8s; color: var(--gold); font-style: italic; }
+.hero-sub {
+  font-size: 14px; line-height: 1.75; color: rgba(242,237,230,0.6); max-width: 460px;
+  opacity: 0; transform: translateY(20px);
+  animation: fadeUp 0.8s ease 1.2s forwards; margin-bottom: 48px;
+}
+.hero-actions { display: flex; gap: 24px; align-items: center; opacity: 0; animation: fadeUp 0.8s ease 1.4s forwards; }
+.btn-primary { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); background: var(--gold); padding: 16px 36px; text-decoration: none; transition: all 0.3s; display: inline-block; }
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+.btn-ghost { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bone); text-decoration: none; border-bottom: 1px solid rgba(242,237,230,0.3); padding-bottom: 2px; transition: border-color 0.3s, color 0.3s; }
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+.hero-scroll-hint {
+  position: absolute; bottom: 48px; left: 56px;
+  display: flex; align-items: center; gap: 16px;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ash);
+  opacity: 0; animation: fadeUp 0.8s ease 1.8s forwards;
+}
+.scroll-line { width: 48px; height: 1px; background: var(--gold); }
+.hero-stat-bar { position: absolute; bottom: 48px; right: 56px; display: flex; gap: 48px; opacity: 0; animation: fadeUp 0.8s ease 1.6s forwards; }
+.stat-item { text-align: right; }
+.stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 0.05em; color: var(--gold); display: block; }
+.stat-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash); }
 
-  body {
-    background: var(--ink);
-    color: var(--bone);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-    cursor: none;
-  }
+/* TICKER */
+.ticker-wrap { background: var(--gold); overflow: hidden; padding: 14px 0; }
+.ticker { display: flex; animation: tickerAnim 30s linear infinite; white-space: nowrap; }
+.ticker-item { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.25em; color: var(--ink); padding: 0 48px; display: flex; align-items: center; gap: 48px; }
+.ticker-dot { width: 5px; height: 5px; background: var(--ink); border-radius: 50%; flex-shrink: 0; }
 
-  /* Custom cursor */
-  .cursor {
-    position: fixed;
-    width: 8px; height: 8px;
-    background: var(--gold);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.1s ease;
-    transform: translate(-50%, -50%);
-  }
-  .cursor-ring {
-    position: fixed;
-    width: 36px; height: 36px;
-    border: 1px solid rgba(184,154,106,0.5);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: transform 0.25s ease, width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
-  }
-  body:hover .cursor-ring { opacity: 1; }
-  a:hover ~ .cursor-ring, button:hover ~ .cursor-ring { width: 60px; height: 60px; }
+/* SECTIONS SHARED */
+section { padding: 140px 56px; }
+.section-tag { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; display: flex; align-items: center; gap: 16px; }
+.section-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+.section-heading { font-family: 'Cormorant Garamond', serif; font-size: clamp(38px, 5vw, 72px); font-weight: 300; line-height: 1.05; letter-spacing: -0.01em; }
+.section-heading em { font-style: italic; color: var(--gold); }
+.divider { width: 40px; height: 1px; background: var(--gold); margin: 32px 0; }
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 28px 56px;
-    display: flex; align-items: center; justify-content: space-between;
-    mix-blend-mode: normal;
-    transition: background 0.5s ease, padding 0.4s ease;
-  }
-  nav.scrolled {
-    background: rgba(10,10,10,0.92);
-    backdrop-filter: blur(16px);
-    padding: 18px 56px;
-    border-bottom: 1px solid rgba(184,154,106,0.15);
-  }
-  .nav-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 0.15em;
-    color: var(--bone);
-    text-decoration: none;
-  }
-  .nav-logo span { color: var(--gold); }
-  .nav-links {
-    display: flex; gap: 36px; list-style: none;
-  }
-  .nav-links a {
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ash);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  .nav-links a:hover { color: var(--bone); }
-  .nav-cta {
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink);
-    background: var(--gold);
-    padding: 10px 24px;
-    text-decoration: none;
-    transition: background 0.3s, transform 0.3s;
-  }
-  .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.rd1 { transition-delay: 0.1s; }
+.rd2 { transition-delay: 0.2s; }
+.rd3 { transition-delay: 0.3s; }
+.rd4 { transition-delay: 0.4s; }
 
-  /* HERO */
-  #hero {
-    position: relative;
-    height: 100vh;
-    display: flex; align-items: center;
-    overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background: 
-      radial-gradient(ellipse at 70% 50%, rgba(184,154,106,0.07) 0%, transparent 60%),
-      radial-gradient(ellipse at 20% 80%, rgba(184,154,106,0.05) 0%, transparent 50%),
-      linear-gradient(160deg, #0f0e0c 0%, #0a0a0a 50%, #111009 100%);
-    transform: scale(1.05);
-    transition: transform 8s ease-out;
-  }
-  .hero-bg::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: radial-gradient(rgba(184,154,106,0.08) 1px, transparent 1px);
-    background-size: 48px 48px;
-    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
-  }
-  .hero-bg::after {
-    content: 'EALYTEX';
-    position: absolute;
-    right: -20px; top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(200px, 25vw, 380px);
-    color: rgba(184,154,106,0.04);
-    letter-spacing: -0.02em;
-    pointer-events: none;
-    white-space: nowrap;
-    line-height: 1;
-  }
-  #hero.loaded .hero-bg { transform: scale(1); }
+/* ABOUT */
+#about { background: var(--dark-mid); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1280px; }
+.about-graphic-wrap { height: 580px; border: 1px solid rgba(184,154,106,0.12); position: relative; overflow: hidden; background: linear-gradient(135deg, #111009 0%, #0f0d0a 100%); display: flex; align-items: center; justify-content: center; }
+.about-graphic-wrap::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(184,154,106,0.07) 1px, transparent 1px); background-size: 32px 32px; }
+.about-graphic-wrap::after { content: ''; position: absolute; top: -1px; left: 40px; right: 40px; height: 2px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
+.ag-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 40px; }
+.ag-est { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+.ag-year { font-family: 'Bebas Neue', sans-serif; font-size: 110px; color: var(--bone); line-height: 0.9; margin-bottom: 12px; }
+.ag-city { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-style: italic; color: rgba(242,237,230,0.6); }
+.ag-line { width: 40px; height: 1px; background: var(--gold); margin: 18px auto; }
+.ag-tagline { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ash); margin-bottom: 40px; }
+.ag-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(184,154,106,0.12); width: 100%; max-width: 260px; }
+.ag-stat { background: rgba(10,10,10,0.6); padding: 18px 12px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.ag-stat span { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: var(--gold); line-height: 1; }
+.ag-stat small { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash); }
+.about-text p { font-size: 15px; line-height: 1.85; color: rgba(242,237,230,0.65); margin-bottom: 20px; }
+.about-text p strong { color: var(--bone); font-weight: 500; }
 
-  .hero-content {
-    position: relative;
-    padding: 0 56px;
-    max-width: 900px;
-  }
-  .hero-eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 28px;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.8s ease 0.3s forwards;
-  }
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(64px, 9vw, 128px);
-    font-weight: 300;
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    margin-bottom: 40px;
-  }
-  .hero-title .line {
-    display: block;
-    overflow: hidden;
-  }
-  .hero-title .line span {
-    display: block;
-    opacity: 0;
-    transform: translateY(100%);
-    animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  .hero-title .line:nth-child(1) span { animation-delay: 0.5s; }
-  .hero-title .line:nth-child(2) span { animation-delay: 0.7s; }
-  .hero-title .line:nth-child(3) span { animation-delay: 0.9s; color: var(--gold); font-style: italic; }
+/* CLIENTS */
+#clients { background: var(--ink); padding: 100px 0; }
+.clients-head { padding: 0 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; margin-bottom: 60px; }
+.clients-sub { font-size: 14px; line-height: 1.8; color: rgba(242,237,230,0.5); }
+.marquee-outer { overflow: hidden; width: 100%; position: relative; padding: 16px 0; border-top: 1px solid rgba(184,154,106,0.1); border-bottom: 1px solid rgba(184,154,106,0.1); }
+.marquee-outer::before, .marquee-outer::after { content: ''; position: absolute; top: 0; bottom: 0; width: 100px; z-index: 2; pointer-events: none; }
+.marquee-outer::before { left: 0; background: linear-gradient(to right, var(--ink), transparent); }
+.marquee-outer::after { right: 0; background: linear-gradient(to left, var(--ink), transparent); }
+.marquee-track { display: flex; align-items: center; width: max-content; animation: logoScroll 50s linear infinite; }
+.marquee-track:hover { animation-play-state: paused; }
+.logo-slide { display: flex; align-items: center; justify-content: center; padding: 14px 36px; height: 76px; flex-shrink: 0; border-right: 1px solid rgba(184,154,106,0.08); transition: background 0.3s; }
+.logo-slide:hover { background: rgba(184,154,106,0.04); }
+.logo-slide img { height: 30px; width: auto; max-width: 120px; object-fit: contain; filter: grayscale(1) brightness(2); opacity: 0.38; transition: opacity 0.3s, filter 0.3s; }
+.logo-slide:hover img { opacity: 0.85; filter: grayscale(0) brightness(1); }
 
-  .hero-sub {
-    font-size: 14px;
-    line-height: 1.7;
-    color: rgba(242,237,230,0.6);
-    max-width: 460px;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.8s ease 1.3s forwards;
-    margin-bottom: 48px;
-  }
-  .hero-actions {
-    display: flex; gap: 24px; align-items: center;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 1.5s forwards;
-  }
-  .btn-primary {
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink);
-    background: var(--gold);
-    padding: 16px 36px;
-    text-decoration: none;
-    transition: all 0.3s;
-    display: inline-block;
-  }
-  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
-  .btn-ghost {
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--bone);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(242,237,230,0.3);
-    padding-bottom: 2px;
-    transition: border-color 0.3s, color 0.3s;
-  }
-  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+/* ADVANTAGES */
+#advantages { background: var(--cream); color: var(--ink); }
+#advantages .section-tag { color: #7a6a50; }
+#advantages .section-tag::before { background: #7a6a50; }
+#advantages .section-heading em { color: #8a7a60; }
+.adv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 64px; background: rgba(0,0,0,0.08); }
+.adv-card { background: var(--cream); padding: 48px 36px; position: relative; overflow: hidden; transition: background 0.35s; }
+.adv-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.5s cubic-bezier(0.16,1,0.3,1); }
+.adv-card:hover::before { transform: scaleX(1); }
+.adv-card:hover { background: #ede8de; }
+.adv-num { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: rgba(0,0,0,0.06); line-height: 1; margin-bottom: 14px; transition: color 0.4s; }
+.adv-card:hover .adv-num { color: rgba(184,154,106,0.18); }
+.adv-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; margin-bottom: 12px; }
+.adv-desc { font-size: 13px; line-height: 1.75; color: rgba(10,10,10,0.55); }
+.stats-band { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 2px; background: rgba(0,0,0,0.08); }
+.stat-block { background: var(--ink); color: var(--bone); padding: 48px 36px; text-align: center; }
+.stat-block .num { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: var(--gold); display: block; line-height: 1; }
+.stat-block .lbl { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash); display: block; margin-top: 8px; }
 
-  .hero-scroll-hint {
-    position: absolute; bottom: 48px; left: 56px;
-    display: flex; align-items: center; gap: 16px;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ash);
-    opacity: 0;
-    animation: fadeUp 0.8s ease 2s forwards;
-  }
-  .scroll-line {
-    width: 48px; height: 1px;
-    background: var(--gold);
-    transform-origin: left;
-    animation: expandLine 1.2s ease 2.2s both;
-  }
-  @keyframes expandLine {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-  }
+/* SERVICES */
+#services { background: var(--dark-mid); }
+.services-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 64px; align-items: start; }
+.service-item { border-top: 1px solid rgba(184,154,106,0.15); padding: 32px 0; display: grid; grid-template-columns: 44px 1fr; gap: 20px; align-items: start; transition: padding-left 0.35s; }
+.service-item:hover { padding-left: 10px; }
+.service-item:last-child { border-bottom: 1px solid rgba(184,154,106,0.15); }
+.service-n { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--gold); padding-top: 5px; }
+.service-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; margin-bottom: 10px; }
+.service-desc { font-size: 13px; line-height: 1.75; color: rgba(242,237,230,0.5); }
+.services-panel { position: sticky; top: 120px; height: 540px; background: linear-gradient(160deg, #111009 0%, #0d0c0a 100%); border: 1px solid rgba(184,154,106,0.12); display: flex; flex-direction: column; justify-content: center; padding: 52px 44px; position: relative; overflow: hidden; }
+.services-panel::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(184,154,106,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(184,154,106,0.04) 1px, transparent 1px); background-size: 40px 40px; }
+.sp-label { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; position: relative; }
+.sp-main { font-family: 'Cormorant Garamond', serif; font-size: 58px; font-weight: 300; line-height: 1; color: var(--bone); margin-bottom: 44px; position: relative; }
+.sp-main em { font-style: italic; color: var(--gold); }
+.sp-steps { position: relative; }
+.sp-step { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-top: 1px solid rgba(184,154,106,0.12); font-size: 13px; color: rgba(242,237,230,0.5); transition: color 0.3s; }
+.sp-step:last-child { border-bottom: 1px solid rgba(184,154,106,0.12); }
+.sp-step:hover { color: var(--bone); }
+.sp-step span { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--gold); flex-shrink: 0; }
+.sp-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
 
-  .hero-stat-bar {
-    position: absolute; bottom: 48px; right: 56px;
-    display: flex; gap: 48px;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 1.8s forwards;
-  }
-  .stat-item { text-align: right; }
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px;
-    letter-spacing: 0.05em;
-    color: var(--gold);
-    display: block;
-  }
-  .stat-label {
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ash);
-  }
+/* PRODUCTS */
+#products { background: var(--ink); }
+.products-head { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; margin-bottom: 60px; }
+.products-sub { font-size: 14px; line-height: 1.8; color: rgba(242,237,230,0.5); }
+.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(184,154,106,0.08); }
+.product-card { position: relative; aspect-ratio: 3/4; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+.product-bg { position: absolute; inset: 0; }
+.product-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 4.5vw, 60px); color: rgba(184,154,106,0.07); letter-spacing: 0.05em; pointer-events: none; }
+.product-info { position: relative; z-index: 1; padding: 28px; }
+.product-cat { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 6px; opacity: 0; transform: translateY(6px); transition: all 0.35s; }
+.product-card:hover .product-cat { opacity: 1; transform: translateY(0); }
+.product-name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; line-height: 1.15; }
+.product-desc { font-size: 12px; color: rgba(242,237,230,0.6); line-height: 1.6; margin-top: 8px; max-height: 0; overflow: hidden; transition: max-height 0.45s, opacity 0.35s; opacity: 0; }
+.product-card:hover .product-desc { max-height: 80px; opacity: 1; }
 
-  /* TICKER */
-  .ticker-wrap {
-    background: var(--gold);
-    overflow: hidden;
-    padding: 14px 0;
-  }
-  .ticker {
-    display: flex; gap: 0;
-    animation: ticker 30s linear infinite;
-    white-space: nowrap;
-  }
-  .ticker-item {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 13px;
-    letter-spacing: 0.25em;
-    color: var(--ink);
-    padding: 0 48px;
-    display: flex; align-items: center; gap: 48px;
-  }
-  .ticker-dot {
-    width: 5px; height: 5px;
-    background: var(--ink);
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  @keyframes ticker {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
+/* ETHICS */
+#ethics { background: var(--dark-mid); overflow: hidden; }
+.ethics-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.ethics-visual { background: linear-gradient(160deg, #0f0e0c 0%, #0d0b09 100%); display: flex; align-items: center; justify-content: center; margin: -140px 0 -140px -56px; position: relative; overflow: hidden; min-height: 700px; }
+.ethics-visual::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(184,154,106,0.06) 1px, transparent 1px); background-size: 28px 28px; }
+.ethics-quote-text { position: relative; z-index: 1; font-family: 'Cormorant Garamond', serif; font-size: clamp(20px, 2.2vw, 32px); font-style: italic; font-weight: 300; color: rgba(184,154,106,0.5); text-align: center; padding: 60px; line-height: 1.5; }
+.ethics-body { padding: 80px 0 80px 80px; display: flex; flex-direction: column; justify-content: center; }
+.pillar { padding: 26px 0; border-bottom: 1px solid rgba(184,154,106,0.12); display: grid; grid-template-columns: 20px 1fr; gap: 20px; align-items: start; }
+.pillar:first-of-type { border-top: 1px solid rgba(184,154,106,0.12); }
+.pillar-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; margin-top: 7px; }
+.pillar-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; margin-bottom: 8px; }
+.pillar-desc { font-size: 13px; line-height: 1.7; color: rgba(242,237,230,0.5); }
+.certs { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 44px; padding-top: 36px; border-top: 1px solid rgba(184,154,106,0.12); }
+.cert-badge { padding: 10px 14px; border: 1px solid rgba(184,154,106,0.2); font-size: 10px; line-height: 1.5; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(242,237,230,0.4); text-align: center; transition: border-color 0.3s, color 0.3s; cursor: default; }
+.cert-badge:hover { border-color: var(--gold); color: rgba(242,237,230,0.7); }
 
-  /* SECTIONS */
-  section {
-    padding: 140px 56px;
-    position: relative;
-  }
+/* FACTORIES */
+#factories { background: var(--ink); }
+.factories-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 64px; background: rgba(184,154,106,0.08); }
+.factory-card { background: var(--dark-mid); padding: 44px 36px; transition: background 0.3s; }
+.factory-card:hover { background: #161412; }
+.factory-flag { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+.factory-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; line-height: 1.25; margin-bottom: 20px; }
+.f-stats { margin-bottom: 20px; }
+.f-stat { display: flex; justify-content: space-between; font-size: 12px; padding: 7px 0; border-bottom: 1px solid rgba(184,154,106,0.1); }
+.f-key { color: var(--ash); }
+.f-val { color: var(--bone); }
+.factory-desc { font-size: 12px; line-height: 1.7; color: rgba(242,237,230,0.4); }
+.loc-marquee { overflow: hidden; padding: 18px 0; border-top: 1px solid rgba(184,154,106,0.12); border-bottom: 1px solid rgba(184,154,106,0.12); margin-top: 72px; }
+.loc-track { display: flex; animation: tickerAnim 22s linear infinite; white-space: nowrap; }
+.loc-item { display: flex; align-items: center; gap: 20px; padding: 0 28px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ash); }
+.loc-item em { color: var(--gold); font-style: normal; }
 
-  .section-tag {
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 24px;
-    display: flex; align-items: center; gap: 16px;
-  }
-  .section-tag::before {
-    content: '';
-    display: block;
-    width: 32px; height: 1px;
-    background: var(--gold);
-  }
+/* CONTACT */
+#contact { background: var(--cream); color: var(--ink); }
+#contact .section-tag { color: #7a6a50; }
+#contact .section-tag::before { background: #7a6a50; }
+#contact .section-heading em { color: #8a7a60; }
+.contact-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 100px; margin-top: 64px; }
+.contact-info { display: flex; flex-direction: column; gap: 36px; }
+.c-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: #7a6a50; margin-bottom: 6px; }
+.c-val { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--ink); }
+.c-val a { color: inherit; text-decoration: none; transition: color 0.3s; }
+.c-val a:hover { color: #8a7a60; }
+.offices-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: rgba(0,0,0,0.08); }
+.office { background: var(--cream); padding: 28px; transition: background 0.3s, border-color 0.3s; border: 1px solid transparent; }
+.office:hover { background: #ede8de; border-color: rgba(184,154,106,0.3); }
+.office-city { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.1em; margin-bottom: 8px; }
+.office-addr { font-size: 12px; line-height: 1.7; color: rgba(10,10,10,0.5); }
+.office-tel { font-size: 12px; color: #8a7a60; margin-top: 6px; }
 
-  .section-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(42px, 5.5vw, 80px);
-    font-weight: 300;
-    line-height: 1.05;
-    letter-spacing: -0.01em;
-  }
-  .section-heading em { font-style: italic; color: var(--gold); }
+/* FOOTER */
+footer { background: var(--ink); padding: 48px 56px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(184,154,106,0.15); flex-wrap: wrap; gap: 20px; }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.15em; color: var(--bone); }
+.footer-logo span { color: var(--gold); }
+.footer-copy { font-size: 11px; color: var(--ash); letter-spacing: 0.08em; }
+.footer-links { display: flex; gap: 24px; list-style: none; }
+.footer-links a { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ash); text-decoration: none; transition: color 0.3s; }
+.footer-links a:hover { color: var(--gold); }
 
-  /* ABOUT */
-  #about {
-    background: var(--dark-mid);
-  }
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-    max-width: 1200px;
-  }
-  .about-img-wrap {
-    position: relative;
-    height: 600px;
-    overflow: hidden;
-  }
-  .about-graphic {
-    width: 100%; height: 100%;
-    background: linear-gradient(135deg, #111009 0%, #0f0d0a 100%);
-    border: 1px solid rgba(184,154,106,0.12);
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .about-graphic::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: radial-gradient(rgba(184,154,106,0.07) 1px, transparent 1px);
-    background-size: 32px 32px;
-  }
-  .about-graphic::after {
-    content: '';
-    position: absolute;
-    top: -1px; left: 40px; right: 40px;
-    height: 2px;
-    background: linear-gradient(to right, transparent, var(--gold), transparent);
-  }
-  .about-graphic-inner {
-    position: relative;
-    display: flex; flex-direction: column; align-items: center;
-    text-align: center;
-    gap: 0;
-    padding: 48px;
-    z-index: 1;
-  }
-  .ag-est {
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 8px;
-  }
-  .ag-year {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 120px;
-    color: var(--bone);
-    line-height: 0.9;
-    letter-spacing: -0.02em;
-    margin-bottom: 16px;
-  }
-  .ag-city {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-style: italic;
-    color: rgba(242,237,230,0.6);
-    margin-bottom: 4px;
-  }
-  .ag-line {
-    width: 40px; height: 1px;
-    background: var(--gold);
-    margin: 20px auto;
-  }
-  .ag-tagline {
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--ash);
-    margin-bottom: 48px;
-  }
-  .ag-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: rgba(184,154,106,0.12);
-    width: 100%;
-    max-width: 280px;
-  }
-  .ag-cell {
-    background: rgba(10,10,10,0.6);
-    padding: 20px 16px;
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-  }
-  .ag-cell span {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    color: var(--gold);
-    line-height: 1;
-  }
-  .ag-cell small {
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ash);
-  }
-  .about-text p {
-    font-size: 15px;
-    line-height: 1.85;
-    color: rgba(242,237,230,0.65);
-    margin-bottom: 20px;
-  }
-  .about-text p strong {
-    color: var(--bone);
-    font-weight: 500;
-  }
-  .divider {
-    width: 40px; height: 1px;
-    background: var(--gold);
-    margin: 36px 0;
-  }
-
-  /* CLIENTS */
-  #clients {
-    background: var(--ink);
-    padding: 100px 0;
-  }
-  .clients-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    margin-bottom: 64px;
-    gap: 40px;
-    padding: 0 56px;
-  }
-  .logo-marquee-wrap {
-    overflow: hidden;
-    width: 100%;
-    position: relative;
-    padding: 20px 0;
-    border-top: 1px solid rgba(184,154,106,0.1);
-    border-bottom: 1px solid rgba(184,154,106,0.1);
-  }
-  .logo-marquee-wrap::before,
-  .logo-marquee-wrap::after {
-    content: '';
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 120px;
-    z-index: 2;
-    pointer-events: none;
-  }
-  .logo-marquee-wrap::before {
-    left: 0;
-    background: linear-gradient(to right, var(--ink), transparent);
-  }
-  .logo-marquee-wrap::after {
-    right: 0;
-    background: linear-gradient(to left, var(--ink), transparent);
-  }
-  .logo-track {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    animation: logoScroll 40s linear infinite;
-    width: max-content;
-  }
-  .logo-track:hover { animation-play-state: paused; }
-  @keyframes logoScroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-  .logo-slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px 48px;
-    height: 80px;
-    flex-shrink: 0;
-    border-right: 1px solid rgba(184,154,106,0.08);
-    transition: background 0.3s;
-  }
-  .logo-slide:hover { background: rgba(184,154,106,0.04); }
-  .logo-slide img {
-    height: 36px;
-    width: auto;
-    max-width: 140px;
-    object-fit: contain;
-    filter: grayscale(1) brightness(2) invert(0);
-    opacity: 0.45;
-    transition: opacity 0.3s, filter 0.3s;
-  }
-  .logo-slide:hover img {
-    opacity: 0.9;
-    filter: grayscale(0) brightness(1);
-  }
-
-  /* ADVANTAGES */
-  #advantages {
-    background: var(--cream);
-    color: var(--ink);
-  }
-  #advantages .section-tag { color: #8a7a60; }
-  #advantages .section-tag::before { background: #8a7a60; }
-  #advantages .section-heading em { color: #8a7a60; }
-  .adv-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    margin-top: 72px;
-    background: rgba(0,0,0,0.08);
-  }
-  .adv-card {
-    background: var(--cream);
-    padding: 52px 40px;
-    position: relative;
-    overflow: hidden;
-    transition: background 0.4s;
-  }
-  .adv-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0;
-    width: 100%; height: 3px;
-    background: var(--gold);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .adv-card:hover::before { transform: scaleX(1); }
-  .adv-card:hover { background: #f0ebe1; }
-  .adv-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 72px;
-    color: rgba(0,0,0,0.06);
-    line-height: 1;
-    margin-bottom: 16px;
-    transition: color 0.4s;
-  }
-  .adv-card:hover .adv-num { color: rgba(184,154,106,0.2); }
-  .adv-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
-    font-weight: 400;
-    margin-bottom: 16px;
-    color: var(--ink);
-  }
-  .adv-desc {
-    font-size: 13px;
-    line-height: 1.75;
-    color: rgba(10,10,10,0.55);
-  }
-  .stats-band {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    margin-top: 2px;
-    background: rgba(0,0,0,0.08);
-  }
-  .stat-block {
-    background: var(--ink);
-    color: var(--bone);
-    padding: 52px 40px;
-    text-align: center;
-  }
-  .stat-block .num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 72px;
-    color: var(--gold);
-    display: block;
-    line-height: 1;
-  }
-  .stat-block .lbl {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ash);
-    display: block;
-    margin-top: 8px;
-  }
-
-  /* SERVICES */
-  #services {
-    background: var(--dark-mid);
-  }
-  .services-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    margin-top: 72px;
-    align-items: start;
-  }
-  .service-list { display: flex; flex-direction: column; gap: 0; }
-  .service-item {
-    border-top: 1px solid rgba(184,154,106,0.15);
-    padding: 36px 0;
-    display: grid;
-    grid-template-columns: 48px 1fr;
-    gap: 24px;
-    align-items: start;
-    cursor: none;
-    transition: padding-left 0.4s;
-  }
-  .service-item:hover { padding-left: 12px; }
-  .service-item:last-child { border-bottom: 1px solid rgba(184,154,106,0.15); }
-  .service-n {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    color: var(--gold);
-    padding-top: 4px;
-  }
-  .service-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 400;
-    margin-bottom: 12px;
-  }
-  .service-desc {
-    font-size: 13px;
-    line-height: 1.75;
-    color: rgba(242,237,230,0.5);
-  }
-  .services-img {
-    position: sticky; top: 120px;
-    height: 560px;
-    overflow: hidden;
-  }
-  .services-graphic {
-    width: 100%; height: 100%;
-    background: linear-gradient(160deg, #111009 0%, #0d0c0a 100%);
-    border: 1px solid rgba(184,154,106,0.12);
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 56px 48px;
-    position: relative;
-    overflow: hidden;
-  }
-  .services-graphic::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: linear-gradient(rgba(184,154,106,0.04) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(184,154,106,0.04) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
-  .sg-label {
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 24px;
-    position: relative;
-  }
-  .sg-main {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 64px;
-    font-weight: 300;
-    line-height: 1;
-    color: var(--bone);
-    margin-bottom: 48px;
-    position: relative;
-  }
-  .sg-main em { font-style: italic; color: var(--gold); }
-  .sg-steps {
-    display: flex; flex-direction: column; gap: 0;
-    position: relative;
-  }
-  .sg-step {
-    display: flex; align-items: center; gap: 16px;
-    padding: 16px 0;
-    border-top: 1px solid rgba(184,154,106,0.12);
-    font-size: 13px;
-    color: rgba(242,237,230,0.5);
-    transition: color 0.3s;
-  }
-  .sg-step:last-child { border-bottom: 1px solid rgba(184,154,106,0.12); }
-  .sg-step:hover { color: var(--bone); }
-  .sg-step span {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    color: var(--gold);
-    flex-shrink: 0;
-  }
-  .sg-accent {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(to right, transparent, var(--gold), transparent);
-  }
-
-  /* PRODUCTS */
-  #products {
-    background: var(--ink);
-  }
-  .products-grid {
-    position: relative;
-  }
-  .products-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: end;
-    margin-bottom: 64px;
-  }
-  .products-sub {
-    font-size: 14px;
-    line-height: 1.8;
-    color: rgba(242,237,230,0.5);
-  }
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: rgba(184,154,106,0.08);
-  }
-  .product-card {
-    position: relative;
-    aspect-ratio: 3/4;
-    overflow: hidden;
-    background: var(--mid);
-    cursor: none;
-  }
-  .product-card img {
-    display: none;
-  }
-  .product-bg {
-    position: absolute; inset: 0;
-    transition: opacity 0.6s ease;
-  }
-  .product-card:hover .product-bg { opacity: 0.6; }
-  .product-card-label {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(48px, 6vw, 80px);
-    color: rgba(184,154,106,0.08);
-    letter-spacing: 0.05em;
-    white-space: nowrap;
-    pointer-events: none;
-    transition: color 0.5s;
-    text-align: center;
-  }
-  .product-card:hover .product-card-label { color: rgba(184,154,106,0.04); }
-  .product-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0) 50%);
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 32px;
-  }
-  .product-cat {
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 8px;
-    transform: translateY(8px);
-    opacity: 0;
-    transition: all 0.4s ease 0.05s;
-  }
-  .product-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 300;
-    line-height: 1.1;
-  }
-  .product-desc {
-    font-size: 12px;
-    color: rgba(242,237,230,0.6);
-    line-height: 1.6;
-    margin-top: 10px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease, opacity 0.4s ease;
-    opacity: 0;
-  }
-  .product-card:hover .product-cat { opacity: 1; transform: translateY(0); }
-  .product-card:hover .product-desc { max-height: 80px; opacity: 1; }
-
-  /* ETHICS */
-  #ethics {
-    background: var(--dark-mid);
-    overflow: hidden;
-  }
-  .ethics-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    min-height: 700px;
-  }
-  .ethics-img {
-    position: relative;
-    overflow: hidden;
-    margin: -140px -0px -140px -56px;
-    background: linear-gradient(160deg, #0f0e0c 0%, #0d0b09 100%);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .ethics-img::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: radial-gradient(rgba(184,154,106,0.06) 1px, transparent 1px);
-    background-size: 28px 28px;
-  }
-  .ethics-img::after {
-    content: '"Our future is rooted in the people who make our products."';
-    position: absolute;
-    inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(22px, 2.5vw, 36px);
-    font-style: italic;
-    font-weight: 300;
-    color: rgba(184,154,106,0.5);
-    text-align: center;
-    padding: 80px 60px;
-    line-height: 1.4;
-  }
-  .ethics-content {
-    padding: 80px 0 80px 80px;
-    display: flex; flex-direction: column; justify-content: center;
-    gap: 0;
-  }
-  .ethics-pillars {
-    display: flex; flex-direction: column;
-    margin-top: 56px;
-    gap: 0;
-  }
-  .pillar {
-    padding: 28px 0;
-    border-bottom: 1px solid rgba(184,154,106,0.12);
-    display: grid;
-    grid-template-columns: 24px 1fr;
-    gap: 24px;
-    align-items: start;
-  }
-  .pillar:first-child { border-top: 1px solid rgba(184,154,106,0.12); }
-  .pillar-dot {
-    width: 6px; height: 6px;
-    background: var(--gold);
-    border-radius: 50%;
-    margin-top: 8px;
-  }
-  .pillar-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 400;
-    margin-bottom: 8px;
-  }
-  .pillar-desc {
-    font-size: 13px;
-    line-height: 1.7;
-    color: rgba(242,237,230,0.5);
-  }
-  .certs {
-    display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
-    margin-top: 48px;
-    padding-top: 40px;
-    border-top: 1px solid rgba(184,154,106,0.12);
-  }
-  .cert-badge {
-    height: 48px;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-    opacity: 0.35;
-    transition: opacity 0.3s;
-  }
-  .cert-badge:hover { opacity: 0.7; }
-  .cert-text-badge {
-    padding: 10px 16px;
-    border: 1px solid rgba(184,154,106,0.2);
-    font-size: 10px;
-    line-height: 1.5;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(242,237,230,0.4);
-    text-align: center;
-    transition: border-color 0.3s, color 0.3s;
-    cursor: default;
-  }
-  .cert-text-badge:hover {
-    border-color: var(--gold);
-    color: rgba(242,237,230,0.7);
-  }
-
-  /* FACTORIES */
-  #factories {
-    background: var(--ink);
-  }
-  .factories-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    margin-top: 72px;
-    background: rgba(184,154,106,0.08);
-  }
-  .factory-card {
-    background: var(--dark-mid);
-    padding: 48px 40px;
-    position: relative;
-    overflow: hidden;
-    transition: background 0.3s;
-  }
-  .factory-card::after {
-    content: '';
-    position: absolute; top: 0; right: 0;
-    width: 0; height: 100%;
-    background: var(--gold);
-    opacity: 0.03;
-    transition: width 0.5s ease;
-  }
-  .factory-card:hover { background: #161412; }
-  .factory-card:hover::after { width: 100%; }
-  .factory-flag {
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 16px;
-  }
-  .factory-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 1.2;
-    margin-bottom: 24px;
-  }
-  .factory-stats {
-    display: flex; flex-direction: column; gap: 10px;
-    margin-bottom: 24px;
-  }
-  .f-stat {
-    display: flex; justify-content: space-between;
-    font-size: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(184,154,106,0.1);
-  }
-  .f-stat-key { color: var(--ash); }
-  .f-stat-val { color: var(--bone); font-weight: 400; }
-  .factory-desc {
-    font-size: 12px;
-    line-height: 1.7;
-    color: rgba(242,237,230,0.4);
-  }
-
-  /* CONTACT */
-  #contact {
-    background: var(--cream);
-    color: var(--ink);
-  }
-  #contact .section-tag { color: #8a7a60; }
-  #contact .section-tag::before { background: #8a7a60; }
-  .contact-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 120px;
-    margin-top: 72px;
-    align-items: start;
-  }
-  .contact-info { display: flex; flex-direction: column; gap: 40px; }
-  .contact-item {}
-  .contact-label {
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: #8a7a60;
-    margin-bottom: 8px;
-  }
-  .contact-val {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 400;
-    color: var(--ink);
-  }
-  .contact-val a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  .contact-val a:hover { color: #8a7a60; }
-  .offices-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-  }
-  .office {
-    padding: 28px;
-    border: 1px solid rgba(10,10,10,0.1);
-    position: relative;
-    transition: border-color 0.3s;
-  }
-  .office:hover { border-color: var(--gold); }
-  .office-city {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    letter-spacing: 0.08em;
-    margin-bottom: 8px;
-  }
-  .office-addr {
-    font-size: 12px;
-    line-height: 1.7;
-    color: rgba(10,10,10,0.5);
-  }
-  .office-tel {
-    font-size: 12px;
-    color: #8a7a60;
-    margin-top: 8px;
-  }
-
-  /* FOOTER */
-  footer {
-    background: var(--ink);
-    padding: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid rgba(184,154,106,0.15);
-  }
-  .footer-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    letter-spacing: 0.15em;
-    color: var(--bone);
-  }
-  .footer-logo span { color: var(--gold); }
-  .footer-copy {
-    font-size: 11px;
-    color: var(--ash);
-    letter-spacing: 0.1em;
-  }
-  .footer-links {
-    display: flex; gap: 28px;
-    list-style: none;
-  }
-  .footer-links a {
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ash);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  .footer-links a:hover { color: var(--gold); }
-
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes slideUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* SCROLL REVEAL */
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
-
-  /* HORIZONTAL MARQUEE for factories outside */
-  .location-marquee {
-    overflow: hidden;
-    padding: 20px 0;
-    border-top: 1px solid rgba(184,154,106,0.12);
-    border-bottom: 1px solid rgba(184,154,106,0.12);
-    margin-top: 80px;
-  }
-  .location-marquee-track {
-    display: flex;
-    animation: ticker 20s linear infinite;
-    white-space: nowrap;
-    gap: 0;
-  }
-  .location-item {
-    display: flex; align-items: center; gap: 24px;
-    padding: 0 32px;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ash);
-  }
-  .location-item span { color: var(--gold); }
+/* ANIMATIONS */
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes tickerAnim { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes logoScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<!-- NAV -->
-<nav id="mainNav">
+<nav id="nav">
   <a href="#" class="nav-logo">EALYTEX<span>.</span></a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
@@ -1125,6 +308,7 @@
 <!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
+  <div class="hero-watermark">EALYTEX</div>
   <div class="hero-content">
     <p class="hero-eyebrow">Est. 2006 · New York City Garment District</p>
     <h1 class="hero-title">
@@ -1138,296 +322,204 @@
       <a href="#services" class="btn-ghost">Explore Services</a>
     </div>
   </div>
-  <div class="hero-scroll-hint">
-    <span class="scroll-line"></span>
-    Scroll to explore
-  </div>
+  <div class="hero-scroll-hint"><span class="scroll-line"></span>Scroll to explore</div>
   <div class="hero-stat-bar">
-    <div class="stat-item">
-      <span class="stat-num">25+</span>
-      <span class="stat-label">Years Experience</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">4K+</span>
-      <span class="stat-label">Global Employees</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">40</span>
-      <span class="stat-label">Mfg. Sites</span>
-    </div>
+    <div class="stat-item"><span class="stat-num">25+</span><span class="stat-label">Years Experience</span></div>
+    <div class="stat-item"><span class="stat-num">4K+</span><span class="stat-label">Global Employees</span></div>
+    <div class="stat-item"><span class="stat-num">40</span><span class="stat-label">Mfg. Sites</span></div>
   </div>
 </section>
 
 <!-- TICKER -->
 <div class="ticker-wrap">
   <div class="ticker">
-    <div class="ticker-item">Design & Development <span class="ticker-dot"></span> Sourcing & Production <span class="ticker-dot"></span> Shipping & Logistics <span class="ticker-dot"></span> Quality Assurance <span class="ticker-dot"></span> Compliance Auditing <span class="ticker-dot"></span> Trend Forecasting <span class="ticker-dot"></span></div>
-    <div class="ticker-item">Design & Development <span class="ticker-dot"></span> Sourcing & Production <span class="ticker-dot"></span> Shipping & Logistics <span class="ticker-dot"></span> Quality Assurance <span class="ticker-dot"></span> Compliance Auditing <span class="ticker-dot"></span> Trend Forecasting <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Design &amp; Development <span class="ticker-dot"></span> Sourcing &amp; Production <span class="ticker-dot"></span> Shipping &amp; Logistics <span class="ticker-dot"></span> Quality Assurance <span class="ticker-dot"></span> Compliance Auditing <span class="ticker-dot"></span> Trend Forecasting <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Design &amp; Development <span class="ticker-dot"></span> Sourcing &amp; Production <span class="ticker-dot"></span> Shipping &amp; Logistics <span class="ticker-dot"></span> Quality Assurance <span class="ticker-dot"></span> Compliance Auditing <span class="ticker-dot"></span> Trend Forecasting <span class="ticker-dot"></span></div>
   </div>
 </div>
 
 <!-- ABOUT -->
 <section id="about">
   <div class="about-grid">
-    <div class="about-img-wrap reveal">
-      <div class="about-graphic">
-        <div class="about-graphic-inner">
-          <span class="ag-est">Est.</span>
-          <span class="ag-year">2006</span>
-          <span class="ag-city">New York City</span>
-          <div class="ag-line"></div>
-          <span class="ag-tagline">Garment District</span>
-          <div class="ag-grid">
-            <div class="ag-cell"><span>25+</span><small>Years</small></div>
-            <div class="ag-cell"><span>4K+</span><small>People</small></div>
-            <div class="ag-cell"><span>40</span><small>Sites</small></div>
-            <div class="ag-cell"><span>70K</span><small>Daily pcs</small></div>
-          </div>
+    <div class="about-graphic-wrap reveal">
+      <div class="ag-inner">
+        <span class="ag-est">Est.</span>
+        <span class="ag-year">2006</span>
+        <span class="ag-city">New York City</span>
+        <div class="ag-line"></div>
+        <span class="ag-tagline">Garment District</span>
+        <div class="ag-stats">
+          <div class="ag-stat"><span>25+</span><small>Years</small></div>
+          <div class="ag-stat"><span>4K+</span><small>People</small></div>
+          <div class="ag-stat"><span>40</span><small>Sites</small></div>
+          <div class="ag-stat"><span>147K</span><small>Daily pcs</small></div>
         </div>
       </div>
     </div>
     <div class="about-text">
       <div class="section-tag reveal">Our Story</div>
-      <h2 class="section-heading reveal reveal-delay-1">The Partner <em>Behind</em> the Brand</h2>
-      <div class="divider reveal reveal-delay-2"></div>
-      <p class="reveal reveal-delay-2">Founded in 2006, <strong>Ealytex Global Inc.</strong> is a U.S.-based fashion manufacturer headquartered in the heart of New York City's garment district. We operate as a fully integrated partner — bringing design, development, and production together to support brands from concept through execution.</p>
-      <p class="reveal reveal-delay-3">Over the years, we've partnered with some of the most recognized names in global retail including <strong>Costco, Walmart, Amazon, and Target.</strong></p>
-      <p class="reveal reveal-delay-3">As niche-focused marketers with hands-on design and development expertise, we move quickly to identify emerging trends and strategically align product assortments to evolving consumer demand.</p>
-      <a href="#contact" class="btn-primary reveal reveal-delay-4" style="margin-top: 16px;">Work With Us</a>
+      <h2 class="section-heading reveal rd1">The Partner <em>Behind</em> the Brand</h2>
+      <div class="divider reveal rd2"></div>
+      <p class="reveal rd2">Founded in 2006, <strong>Ealytex Global Inc.</strong> is a U.S.-based fashion manufacturer headquartered in the heart of New York City's garment district. We operate as a fully integrated partner — bringing design, development, and production together to support brands from concept through execution.</p>
+      <p class="reveal rd3">Over the years, we've partnered with some of the most recognized names in global retail including <strong>Costco, Walmart, Amazon, and Target.</strong></p>
+      <p class="reveal rd3">As niche-focused marketers with hands-on design and development expertise, we move quickly to identify emerging trends and strategically align product assortments to evolving consumer demand.</p>
+      <a href="#contact" class="btn-primary reveal rd4" style="margin-top:16px;">Work With Us</a>
     </div>
   </div>
 </section>
 
 <!-- CLIENTS -->
 <section id="clients">
-  <div class="clients-header">
+  <div class="clients-head">
     <div>
       <div class="section-tag reveal">Our Clients</div>
-      <h2 class="section-heading reveal reveal-delay-1">Trusted by <em>Global</em> Retailers</h2>
+      <h2 class="section-heading reveal rd1">Trusted by <em>Global</em> Retailers</h2>
     </div>
-    <p class="products-sub reveal" style="max-width: 360px;">Partnering with the world's leading brands and big-box retailers across every major market.</p>
+    <p class="clients-sub reveal">Partnering with the world's leading brands and big-box retailers across every major market.</p>
   </div>
-  <div class="logo-marquee-wrap reveal">
-    <div class="logo-track" id="logoTrack">
-<div class="logo-slide"><img src="images/New_Balance_logo_svg.png" alt="New Balance" title="New Balance"></div>
-<div class="logo-slide"><img src="images/Eddie_Bauer_script_logo_svg.png" alt="Eddie Bauer" title="Eddie Bauer"></div>
-<div class="logo-slide"><img src="images/idtcWjnU-4_logos.png" alt="Splendid" title="Splendid"></div>
-<div class="logo-slide"><img src="images/Columbia-logo.png" alt="Columbia" title="Columbia"></div>
-<div class="logo-slide"><img src="images/Gap-Logo-PNG-Photo.png" alt="Gap" title="Gap"></div>
-<div class="logo-slide"><img src="images/jockey-logo-black-and-white.png" alt="Jockey" title="Jockey"></div>
-<div class="logo-slide"><img src="images/United-Colors-of-Benetton-Logo-1977.png" alt="Benetton" title="Benetton"></div>
-<div class="logo-slide"><img src="images/0x0.png" alt="Manmade" title="Manmade"></div>
-<div class="logo-slide"><img src="images/Helly-Hansen-Logo-1989.png" alt="Helly Hansen" title="Helly Hansen"></div>
-<div class="logo-slide"><img src="images/danskin.png" alt="Danskin" title="Danskin"></div>
-<div class="logo-slide"><img src="images/anne-klein-1-logo-png-transparent.png" alt="Anne Klein" title="Anne Klein"></div>
-<div class="logo-slide"><img src="images/Calvin-Klein-Logo-1992.png" alt="Calvin Klein" title="Calvin Klein"></div>
-<div class="logo-slide"><img src="images/tommy_hilfiger-logo_brandlogos_net_z9xcn-512x344.png" alt="Tommy Hilfiger" title="Tommy Hilfiger"></div>
-<div class="logo-slide"><img src="images/Neiman_Marcus_logo_black_svg.png" alt="Neiman Marcus" title="Neiman Marcus"></div>
-<div class="logo-slide"><img src="images/anne-klein-1-logo-png-transparent.png" alt="Nordstrom" title="Nordstrom"></div>
-<div class="logo-slide"><img src="images/Cirque-du-Soleil-logo.png" alt="Cirque du Soleil" title="Cirque du Soleil"></div>
-<div class="logo-slide"><img src="images/anne-klein-1-logo-png-transparent.png" alt="Lord & Taylor" title="Lord & Taylor"></div>
-<div class="logo-slide"><img src="images/anne-klein-1-logo-png-transparent.png" alt="Bloomingdale's" title="Bloomingdale's"></div>
-<div class="logo-slide"><img src="images/TJ_Maxx_Logo_svg.png" alt="TJ Maxx" title="TJ Maxx"></div>
-<div class="logo-slide"><img src="images/Amazon_logo_svg.png" alt="Amazon" title="Amazon"></div>
-<div class="logo-slide"><img src="images/Target_logo_svg.png" alt="Target" title="Target"></div>
-<div class="logo-slide"><img src="images/BJs_Wholesale_Club_Logo_svg.png" alt="BJ's" title="BJ's"></div>
-<div class="logo-slide"><img src="images/Disney_logo.png" alt="Disney" title="Disney"></div>
-<div class="logo-slide"><img src="images/Ross_Stores_logo_svg.png" alt="Ross" title="Ross"></div>
-<div class="logo-slide"><img src="images/Sams-Club-Logo.png" alt="Sam's Club" title="Sam's Club"></div>
-<div class="logo-slide"><img src="images/Walmart_logo__2008__svg.png" alt="Walmart" title="Walmart"></div>
-<div class="logo-slide"><img src="images/Costco_Wholesale_logo_2010-10-26_svg.webp" alt="Costco" title="Costco"></div>
-<div class="logo-slide"><img src="images/frank-and-oak-seeklogo.png" alt="Frank And Oak" title="Frank And Oak"></div>
-<div class="logo-slide"><img src="images/Macy_s_Logo_2019.png" alt="Macy's" title="Macy's"></div>
-<div class="logo-slide"><img src="images/New_Balance_logo_svg.png" alt="New Balance" title="New Balance"></div>
-<div class="logo-slide"><img src="images/Eddie_Bauer_script_logo_svg.png" alt="Eddie Bauer" title="Eddie Bauer"></div>
-<div class="logo-slide"><img src="images/idtcWjnU-4_logos.png" alt="Splendid" title="Splendid"></div>
-<div class="logo-slide"><img src="images/Columbia-logo.png" alt="Columbia" title="Columbia"></div>
-<div class="logo-slide"><img src="images/Gap-Logo-PNG-Photo.png" alt="Gap" title="Gap"></div>
-<div class="logo-slide"><img src="images/jockey-logo-black-and-white.png" alt="Jockey" title="Jockey"></div>
-<div class="logo-slide"><img src="images/United-Colors-of-Benetton-Logo-1977.png" alt="Benetton" title="Benetton"></div>
-<div class="logo-slide"><img src="images/0x0.png" alt="Manmade" title="Manmade"></div>
-<div class="logo-slide"><img src="images/Helly-Hansen-Logo-1989.png" alt="Helly Hansen" title="Helly Hansen"></div>
-<div class="logo-slide"><img src="images/danskin.png" alt="Danskin" title="Danskin"></div>
-<div class="logo-slide"><img src="images/anne-klein-1-logo-png-transparent.png" alt="Anne Klein" title="Anne Klein"></div>
-<div class="logo-slide"><img src="images/Calvin-Klein-Logo-1992.png" alt="Calvin Klein" title="Calvin Klein"></div>
-<div class="logo-slide"><img src="images/tommy_hilfiger-logo_brandlogos_net_z9xcn-512x344.png" alt="Tommy Hilfiger" title="Tommy Hilfiger"></div>
-<div class="logo-slide"><img src="images/Neiman_Marcus_logo_black_svg.png" alt="Neiman Marcus" title="Neiman Marcus"></div>
-<div class="logo-slide"><img src="images/anne-klein-1-logo-png-transparent.png" alt="Nordstrom" title="Nordstrom"></div>
-<div class="logo-slide"><img src="images/Cirque-du-Soleil-logo.png" alt="Cirque du Soleil" title="Cirque du Soleil"></div>
-<div class="logo-slide"><img src="images/anne-klein-1-logo-png-transparent.png" alt="Lord & Taylor" title="Lord & Taylor"></div>
-<div class="logo-slide"><img src="images/anne-klein-1-logo-png-transparent.png" alt="Bloomingdale's" title="Bloomingdale's"></div>
-<div class="logo-slide"><img src="images/TJ_Maxx_Logo_svg.png" alt="TJ Maxx" title="TJ Maxx"></div>
-<div class="logo-slide"><img src="images/Amazon_logo_svg.png" alt="Amazon" title="Amazon"></div>
-<div class="logo-slide"><img src="images/Target_logo_svg.png" alt="Target" title="Target"></div>
-<div class="logo-slide"><img src="images/BJs_Wholesale_Club_Logo_svg.png" alt="BJ's" title="BJ's"></div>
-<div class="logo-slide"><img src="images/Disney_logo.png" alt="Disney" title="Disney"></div>
-<div class="logo-slide"><img src="images/Ross_Stores_logo_svg.png" alt="Ross" title="Ross"></div>
-<div class="logo-slide"><img src="images/Sams-Club-Logo.png" alt="Sam's Club" title="Sam's Club"></div>
-<div class="logo-slide"><img src="images/Walmart_logo__2008__svg.png" alt="Walmart" title="Walmart"></div>
-<div class="logo-slide"><img src="images/Costco_Wholesale_logo_2010-10-26_svg.webp" alt="Costco" title="Costco"></div>
-<div class="logo-slide"><img src="images/frank-and-oak-seeklogo.png" alt="Frank And Oak" title="Frank And Oak"></div>
-<div class="logo-slide"><img src="images/Macy_s_Logo_2019.png" alt="Macy's" title="Macy's"></div>
+  <div class="marquee-outer reveal">
+    <div class="marquee-track">
+      <div class="logo-slide"><img src="images/Walmart_logo__2008__svg.png" alt="Walmart"></div>
+      <div class="logo-slide"><img src="images/Target_logo_svg.png" alt="Target"></div>
+      <div class="logo-slide"><img src="images/Amazon_logo_svg.png" alt="Amazon"></div>
+      <div class="logo-slide"><img src="images/Costco_Wholesale_logo_2010-10-26_svg.webp" alt="Costco"></div>
+      <div class="logo-slide"><img src="images/Sams-Club-Logo.png" alt="Sam's Club"></div>
+      <div class="logo-slide"><img src="images/BJs_Wholesale_Club_Logo_svg.png" alt="BJ's"></div>
+      <div class="logo-slide"><img src="images/Ross_Stores_logo_svg.png" alt="Ross"></div>
+      <div class="logo-slide"><img src="images/TJ_Maxx_Logo_svg.png" alt="TJ Maxx"></div>
+      <div class="logo-slide"><img src="images/Macy_s_Logo_2019.png" alt="Macy's"></div>
+      <div class="logo-slide"><img src="images/nordstrom-2-logo-png-transparent.png" alt="Nordstrom"></div>
+      <div class="logo-slide"><img src="images/Neiman_Marcus_logo_black_svg.png" alt="Neiman Marcus"></div>
+      <div class="logo-slide"><img src="images/bloomingdales-logo-png-transparent.png" alt="Bloomingdale's"></div>
+      <div class="logo-slide"><img src="images/Calvin-Klein-Logo-1992.png" alt="Calvin Klein"></div>
+      <div class="logo-slide"><img src="images/tommy_hilfiger-logo_brandlogos_net_z9xcn-512x344.png" alt="Tommy Hilfiger"></div>
+      <div class="logo-slide"><img src="images/New_Balance_logo_svg.png" alt="New Balance"></div>
+      <div class="logo-slide"><img src="images/Columbia-logo.png" alt="Columbia"></div>
+      <div class="logo-slide"><img src="images/Helly-Hansen-Logo-1989.png" alt="Helly Hansen"></div>
+      <div class="logo-slide"><img src="images/Eddie_Bauer_script_logo_svg.png" alt="Eddie Bauer"></div>
+      <div class="logo-slide"><img src="images/Disney_logo.png" alt="Disney"></div>
+      <div class="logo-slide"><img src="images/Cirque-du-Soleil-logo.png" alt="Cirque du Soleil"></div>
+      <div class="logo-slide"><img src="images/Gap-Logo-PNG-Photo.png" alt="Gap"></div>
+      <div class="logo-slide"><img src="images/lord-taylor-logo-png-transparent.png" alt="Lord &amp; Taylor"></div>
+      <div class="logo-slide"><img src="images/anne-klein-1-logo-png-transparent.png" alt="Anne Klein"></div>
+      <div class="logo-slide"><img src="images/United-Colors-of-Benetton-Logo-1977.png" alt="Benetton"></div>
+      <div class="logo-slide"><img src="images/frank-and-oak-seeklogo.png" alt="Frank And Oak"></div>
+      <div class="logo-slide"><img src="images/jockey-logo-black-and-white.png" alt="Jockey"></div>
+      <div class="logo-slide"><img src="images/danskin.png" alt="Danskin"></div>
+      <!-- duplicate for loop -->
+      <div class="logo-slide"><img src="images/Walmart_logo__2008__svg.png" alt="Walmart"></div>
+      <div class="logo-slide"><img src="images/Target_logo_svg.png" alt="Target"></div>
+      <div class="logo-slide"><img src="images/Amazon_logo_svg.png" alt="Amazon"></div>
+      <div class="logo-slide"><img src="images/Costco_Wholesale_logo_2010-10-26_svg.webp" alt="Costco"></div>
+      <div class="logo-slide"><img src="images/Sams-Club-Logo.png" alt="Sam's Club"></div>
+      <div class="logo-slide"><img src="images/BJs_Wholesale_Club_Logo_svg.png" alt="BJ's"></div>
+      <div class="logo-slide"><img src="images/Ross_Stores_logo_svg.png" alt="Ross"></div>
+      <div class="logo-slide"><img src="images/TJ_Maxx_Logo_svg.png" alt="TJ Maxx"></div>
+      <div class="logo-slide"><img src="images/Macy_s_Logo_2019.png" alt="Macy's"></div>
+      <div class="logo-slide"><img src="images/nordstrom-2-logo-png-transparent.png" alt="Nordstrom"></div>
+      <div class="logo-slide"><img src="images/Neiman_Marcus_logo_black_svg.png" alt="Neiman Marcus"></div>
+      <div class="logo-slide"><img src="images/bloomingdales-logo-png-transparent.png" alt="Bloomingdale's"></div>
+      <div class="logo-slide"><img src="images/Calvin-Klein-Logo-1992.png" alt="Calvin Klein"></div>
+      <div class="logo-slide"><img src="images/tommy_hilfiger-logo_brandlogos_net_z9xcn-512x344.png" alt="Tommy Hilfiger"></div>
+      <div class="logo-slide"><img src="images/New_Balance_logo_svg.png" alt="New Balance"></div>
+      <div class="logo-slide"><img src="images/Columbia-logo.png" alt="Columbia"></div>
+      <div class="logo-slide"><img src="images/Helly-Hansen-Logo-1989.png" alt="Helly Hansen"></div>
+      <div class="logo-slide"><img src="images/Eddie_Bauer_script_logo_svg.png" alt="Eddie Bauer"></div>
+      <div class="logo-slide"><img src="images/Disney_logo.png" alt="Disney"></div>
+      <div class="logo-slide"><img src="images/Cirque-du-Soleil-logo.png" alt="Cirque du Soleil"></div>
+      <div class="logo-slide"><img src="images/Gap-Logo-PNG-Photo.png" alt="Gap"></div>
+      <div class="logo-slide"><img src="images/lord-taylor-logo-png-transparent.png" alt="Lord &amp; Taylor"></div>
+      <div class="logo-slide"><img src="images/anne-klein-1-logo-png-transparent.png" alt="Anne Klein"></div>
+      <div class="logo-slide"><img src="images/United-Colors-of-Benetton-Logo-1977.png" alt="Benetton"></div>
+      <div class="logo-slide"><img src="images/frank-and-oak-seeklogo.png" alt="Frank And Oak"></div>
+      <div class="logo-slide"><img src="images/jockey-logo-black-and-white.png" alt="Jockey"></div>
+      <div class="logo-slide"><img src="images/danskin.png" alt="Danskin"></div>
     </div>
-  </div>
   </div>
 </section>
 
 <!-- ADVANTAGES -->
 <section id="advantages">
   <div class="section-tag reveal">Why Ealytex</div>
-  <h2 class="section-heading reveal reveal-delay-1">Our <em>Advantages</em></h2>
+  <h2 class="section-heading reveal rd1">Our <em>Advantages</em></h2>
   <div class="adv-grid">
-    <div class="adv-card reveal">
-      <div class="adv-num">01</div>
-      <div class="adv-title">Competitive Pricing</div>
-      <div class="adv-desc">Direct manufacturing with no middlemen. We operate our own factories, offering highly competitive pricing without compromising quality or reliability.</div>
-    </div>
-    <div class="adv-card reveal reveal-delay-1">
-      <div class="adv-num">02</div>
-      <div class="adv-title">Overseas Offices</div>
-      <div class="adv-desc">Four strategically located company-owned offices supporting factory evaluations, compliance oversight, production tracking, and quality assurance audits.</div>
-    </div>
-    <div class="adv-card reveal reveal-delay-2">
-      <div class="adv-num">03</div>
-      <div class="adv-title">Compliance</div>
-      <div class="adv-desc">Ethical, audited, and retailer-approved. We work with factories that meet our operational and ethical standards with regular compliance audits.</div>
-    </div>
-    <div class="adv-card reveal">
-      <div class="adv-num">04</div>
-      <div class="adv-title">Reliability</div>
-      <div class="adv-desc">Our partners count on us for consistent execution, timely deliveries, and dependable quality — season after season.</div>
-    </div>
-    <div class="adv-card reveal reveal-delay-1">
-      <div class="adv-num">05</div>
-      <div class="adv-title">Design & Sourcing</div>
-      <div class="adv-desc">End-to-end product development. Our experienced team brings over 25 years of expertise in sourcing, design, and development at every stage.</div>
-    </div>
-    <div class="adv-card reveal reveal-delay-2">
-      <div class="adv-num">06</div>
-      <div class="adv-title">Quality</div>
-      <div class="adv-desc">Consistent standards at every stage. From materials to production, we maintain strict controls to ensure every product meets global retail expectations.</div>
-    </div>
+    <div class="adv-card reveal"><div class="adv-num">01</div><div class="adv-title">Competitive Pricing</div><div class="adv-desc">Direct manufacturing with no middlemen. We operate our own factories, offering highly competitive pricing without compromising quality or reliability.</div></div>
+    <div class="adv-card reveal rd1"><div class="adv-num">02</div><div class="adv-title">Overseas Offices</div><div class="adv-desc">Four strategically located company-owned offices supporting factory evaluations, compliance oversight, production tracking, and quality assurance audits.</div></div>
+    <div class="adv-card reveal rd2"><div class="adv-num">03</div><div class="adv-title">Compliance</div><div class="adv-desc">Ethical, audited, and retailer-approved. We work with factories that meet our operational and ethical standards with regular compliance audits.</div></div>
+    <div class="adv-card reveal"><div class="adv-num">04</div><div class="adv-title">Reliability</div><div class="adv-desc">Our partners count on us for consistent execution, timely deliveries, and dependable quality — season after season.</div></div>
+    <div class="adv-card reveal rd1"><div class="adv-num">05</div><div class="adv-title">Design &amp; Sourcing</div><div class="adv-desc">End-to-end product development. Our experienced team brings over 25 years of expertise in sourcing, design, and development at every stage.</div></div>
+    <div class="adv-card reveal rd2"><div class="adv-num">06</div><div class="adv-title">Quality</div><div class="adv-desc">Consistent standards at every stage. From materials to production, we maintain strict controls to ensure every product meets global retail expectations.</div></div>
   </div>
   <div class="stats-band">
-    <div class="stat-block reveal">
-      <span class="num">25+</span>
-      <span class="lbl">Years of Industry Experience</span>
-    </div>
-    <div class="stat-block reveal reveal-delay-1">
-      <span class="num">4,000+</span>
-      <span class="lbl">Employees Globally</span>
-    </div>
-    <div class="stat-block reveal reveal-delay-2">
-      <span class="num">40</span>
-      <span class="lbl">Manufacturing Sites</span>
-    </div>
-    <div class="stat-block reveal reveal-delay-3">
-      <span class="num">70K+</span>
-      <span class="lbl">Daily Pieces Produced</span>
-    </div>
+    <div class="stat-block reveal"><span class="num">25+</span><span class="lbl">Years of Experience</span></div>
+    <div class="stat-block reveal rd1"><span class="num">4,000+</span><span class="lbl">Employees Globally</span></div>
+    <div class="stat-block reveal rd2"><span class="num">40</span><span class="lbl">Manufacturing Sites</span></div>
+    <div class="stat-block reveal rd3"><span class="num">147K+</span><span class="lbl">Daily Pieces Produced</span></div>
   </div>
 </section>
 
 <!-- SERVICES -->
 <section id="services">
   <div class="section-tag reveal">What We Do</div>
-  <h2 class="section-heading reveal reveal-delay-1">End-to-End <em>Services</em></h2>
+  <h2 class="section-heading reveal rd1">End-to-End <em>Services</em></h2>
   <div class="services-layout">
-    <div class="service-list">
-      <div class="service-item reveal">
-        <span class="service-n">01</span>
-        <div>
-          <div class="service-title">Design & Development</div>
-          <div class="service-desc">Market research, material sourcing, fabric innovation, trim development, and customized design packages. Including 3D garment visualization to create commercially viable designs that balance creativity, performance, and profitability.</div>
-        </div>
-      </div>
-      <div class="service-item reveal reveal-delay-1">
-        <span class="service-n">02</span>
-        <div>
-          <div class="service-title">Sourcing & Production</div>
-          <div class="service-desc">Deep expertise across denim, sweaters, cut-and-sew knits, seamless, activewear, lingerie, and wovens. We source high-quality fabrics and trims that meet strict standards — delivering consistent quality at competitive pricing.</div>
-        </div>
-      </div>
-      <div class="service-item reveal reveal-delay-2">
-        <span class="service-n">03</span>
-        <div>
-          <div class="service-title">Shipping & Logistics</div>
-          <div class="service-desc">Fast, accurate, and reliable delivery. We coordinate direct shipment to warehouses or distribution centers and manage the entire logistics process — from factory floor to final destination — to ensure on-time delivery.</div>
-        </div>
-      </div>
+    <div>
+      <div class="service-item reveal"><span class="service-n">01</span><div><div class="service-title">Design &amp; Development</div><div class="service-desc">Market research, material sourcing, fabric innovation, trim development, and customized design packages. Including 3D garment visualization to create commercially viable designs that balance creativity, performance, and profitability.</div></div></div>
+      <div class="service-item reveal rd1"><span class="service-n">02</span><div><div class="service-title">Sourcing &amp; Production</div><div class="service-desc">Deep expertise across socks, sweaters, cut-and-sew knits, seamless, activewear, lingerie, and wovens. We source high-quality fabrics and trims that meet strict standards — delivering consistent quality at competitive pricing.</div></div></div>
+      <div class="service-item reveal rd2"><span class="service-n">03</span><div><div class="service-title">Shipping &amp; Logistics</div><div class="service-desc">Fast, accurate, and reliable delivery. We coordinate direct shipment to warehouses or distribution centers and manage the entire logistics process — from factory floor to final destination — to ensure on-time delivery.</div></div></div>
     </div>
-    <div class="services-img reveal reveal-delay-2">
-      <div class="services-graphic">
-        <div class="sg-label">End-to-End</div>
-        <div class="sg-main">Full<br><em>Service</em><br>Partner</div>
-        <div class="sg-steps">
-          <div class="sg-step"><span>01</span> Design & Development</div>
-          <div class="sg-step"><span>02</span> Sourcing & Production</div>
-          <div class="sg-step"><span>03</span> Shipping & Logistics</div>
-        </div>
-        <div class="sg-accent"></div>
+    <div class="services-panel reveal rd2">
+      <div class="sp-label">End-to-End</div>
+      <div class="sp-main">Full<br><em>Service</em><br>Partner</div>
+      <div class="sp-steps">
+        <div class="sp-step"><span>01</span> Design &amp; Development</div>
+        <div class="sp-step"><span>02</span> Sourcing &amp; Production</div>
+        <div class="sp-step"><span>03</span> Shipping &amp; Logistics</div>
       </div>
+      <div class="sp-bar"></div>
     </div>
   </div>
 </section>
 
 <!-- PRODUCTS -->
 <section id="products">
-  <div class="products-header">
+  <div class="products-head">
     <div>
       <div class="section-tag reveal">What We Make</div>
-      <h2 class="section-heading reveal reveal-delay-1">Our Product <em>Range</em></h2>
+      <h2 class="section-heading reveal rd1">Our Product <em>Range</em></h2>
     </div>
     <p class="products-sub reveal">We specialize in men's, women's, and children's apparel across woven and knit categories — from fast fashion essentials to premium lifestyle pieces.</p>
   </div>
   <div class="products-grid">
     <div class="product-card reveal">
-      
-      <div class="product-bg" style="background: linear-gradient(160deg, #1c1a14 0%, #0e0c08 100%);"></div><div class="product-bg" style="background: radial-gradient(circle at 30% 70%, rgba(184,154,106,0.08) 0%, transparent 60%);"></div><div class="product-card-label">SOCKS</div><div class="product-overlay">
-        <span class="product-cat">Category 01</span>
-        <div class="product-name">Socks</div>
-        <div class="product-desc">Our sock program spans a wide range of styles, delivering comfort, durability, and consistent quality through advanced manufacturing.</div>
-      </div>
+      <div class="product-bg" style="background:linear-gradient(160deg,#1c1a14,#0e0c08);"></div>
+      <div class="product-label">SOCKS</div>
+      <div class="product-info"><span class="product-cat">Category 01</span><div class="product-name">Socks</div><div class="product-desc">Our sock program spans a wide range of styles, delivering comfort, durability, and consistent quality through advanced manufacturing.</div></div>
     </div>
-    <div class="product-card reveal reveal-delay-1">
-      
-      <div class="product-bg" style="background: linear-gradient(160deg, #0f1318 0%, #080b0e 100%);"></div><div class="product-bg" style="background: radial-gradient(circle at 70% 30%, rgba(100,140,180,0.06) 0%, transparent 60%);"></div><div class="product-card-label">ACTIVEWEAR</div><div class="product-overlay">
-        <span class="product-cat">Category 02</span>
-        <div class="product-name">Activewear</div>
-        <div class="product-desc">Cut-and-sew leggings, sports bras, technical outer sportswear, and athleisure styles.</div>
-      </div>
+    <div class="product-card reveal rd1">
+      <div class="product-bg" style="background:linear-gradient(160deg,#0f1318,#0a0d10);"></div>
+      <div class="product-label">ACTIVEWEAR</div>
+      <div class="product-info"><span class="product-cat">Category 02</span><div class="product-name">Activewear</div><div class="product-desc">Cut-and-sew leggings, sports bras, technical outer sportswear, and athleisure styles.</div></div>
     </div>
-    <div class="product-card reveal reveal-delay-2">
-      
-      <div class="product-bg" style="background: linear-gradient(160deg, #14100f 0%, #0c0908 100%);"></div><div class="product-bg" style="background: radial-gradient(circle at 50% 50%, rgba(184,154,106,0.06) 0%, transparent 60%);"></div><div class="product-card-label">SEAMLESS</div><div class="product-overlay">
-        <span class="product-cat">Category 03</span>
-        <div class="product-name">Seamless</div>
-        <div class="product-desc">Activewear and intimate undergarments using circular knitting technology and premium yarns.</div>
-      </div>
+    <div class="product-card reveal rd2">
+      <div class="product-bg" style="background:linear-gradient(160deg,#14100f,#0c0908);"></div>
+      <div class="product-label">SEAMLESS</div>
+      <div class="product-info"><span class="product-cat">Category 03</span><div class="product-name">Seamless</div><div class="product-desc">Activewear and intimate undergarments using circular knitting technology and premium yarns.</div></div>
     </div>
     <div class="product-card reveal">
-      
-      <div class="product-bg" style="background: linear-gradient(160deg, #111510 0%, #090c09 100%);"></div><div class="product-bg" style="background: radial-gradient(circle at 20% 80%, rgba(120,160,120,0.05) 0%, transparent 60%);"></div><div class="product-card-label">MENS</div><div class="product-overlay">
-        <span class="product-cat">Category 04</span>
-        <div class="product-name">Men's Loungewear & Pajamas</div>
-        <div class="product-desc">Comfortable, well-constructed essentials designed for everyday wear, rest, and sleep.</div>
-      </div>
+      <div class="product-bg" style="background:linear-gradient(160deg,#111510,#0c0f0b);"></div>
+      <div class="product-label">MENS</div>
+      <div class="product-info"><span class="product-cat">Category 04</span><div class="product-name">Men's Loungewear &amp; Pajamas</div><div class="product-desc">Comfortable, well-constructed essentials designed for everyday wear, rest, and sleep.</div></div>
     </div>
-    <div class="product-card reveal reveal-delay-1">
-      
-      <div class="product-bg" style="background: linear-gradient(160deg, #150f14 0%, #0d090c 100%);"></div><div class="product-bg" style="background: radial-gradient(circle at 80% 20%, rgba(180,130,150,0.05) 0%, transparent 60%);"></div><div class="product-card-label">WOMENS</div><div class="product-overlay">
-        <span class="product-cat">Category 05</span>
-        <div class="product-name">Women's Sleepwear & Loungewear</div>
-        <div class="product-desc">Woven to knit constructions spanning a full range of fabrications in lingerie and loungewear.</div>
-      </div>
+    <div class="product-card reveal rd1">
+      <div class="product-bg" style="background:linear-gradient(160deg,#150f14,#0d090c);"></div>
+      <div class="product-label">WOMENS</div>
+      <div class="product-info"><span class="product-cat">Category 05</span><div class="product-name">Women's Sleepwear &amp; Loungewear</div><div class="product-desc">Woven to knit constructions spanning a full range of fabrications in lingerie and loungewear.</div></div>
     </div>
-    <div class="product-card reveal reveal-delay-2">
-      
-      <div class="product-bg" style="background: linear-gradient(160deg, #101314 0%, #090b0c 100%);"></div><div class="product-bg" style="background: radial-gradient(circle at 40% 60%, rgba(100,130,160,0.05) 0%, transparent 60%);"></div><div class="product-card-label">OUTERWEAR</div><div class="product-overlay">
-        <span class="product-cat">Category 06</span>
-        <div class="product-name">Sweaters & Outerwear</div>
-        <div class="product-desc">Thoughtfully constructed for warmth, comfort, and everyday wear across all seasons.</div>
-      </div>
+    <div class="product-card reveal rd2">
+      <div class="product-bg" style="background:linear-gradient(160deg,#101314,#090b0c);"></div>
+      <div class="product-label">OUTERWEAR</div>
+      <div class="product-info"><span class="product-cat">Category 06</span><div class="product-name">Sweaters &amp; Outerwear</div><div class="product-desc">Thoughtfully constructed for warmth, comfort, and everyday wear across all seasons.</div></div>
     </div>
   </div>
 </section>
@@ -1435,38 +527,22 @@
 <!-- ETHICS -->
 <section id="ethics">
   <div class="ethics-layout">
-    <div class="ethics-img"></div>
-    <div class="ethics-content">
+    <div class="ethics-visual">
+      <div class="ethics-quote-text">"Our future is rooted in the people who make our products."</div>
+    </div>
+    <div class="ethics-body">
       <div class="section-tag reveal">Our Values</div>
-      <h2 class="section-heading reveal reveal-delay-1">Built on <em>Ethical</em> Manufacturing</h2>
-      <div class="ethics-pillars">
-        <div class="pillar reveal">
-          <div class="pillar-dot"></div>
-          <div>
-            <div class="pillar-title">Ethical Standards</div>
-            <div class="pillar-desc">We personally visit each factory to ensure consistent product quality and responsible working conditions — clean, well-organized workspaces with skilled, engaged teams.</div>
-          </div>
-        </div>
-        <div class="pillar reveal reveal-delay-1">
-          <div class="pillar-dot"></div>
-          <div>
-            <div class="pillar-title">Our Factories</div>
-            <div class="pillar-desc">Supporting large-scale programs and smaller emerging brands with comprehensive production capabilities — dyeing, sampling, embroidery, printing — with daily output exceeding 147,000 pieces.</div>
-          </div>
-        </div>
-        <div class="pillar reveal reveal-delay-2">
-          <div class="pillar-dot"></div>
-          <div>
-            <div class="pillar-title">Our People</div>
-            <div class="pillar-desc">Committed to fair wages, safe working conditions, and responsible workplace practices across our entire global manufacturing network.</div>
-          </div>
-        </div>
+      <h2 class="section-heading reveal rd1">Built on <em>Ethical</em> Manufacturing</h2>
+      <div style="margin-top:48px;">
+        <div class="pillar reveal"><div class="pillar-dot"></div><div><div class="pillar-title">Ethical Standards</div><div class="pillar-desc">We personally visit each factory to ensure consistent product quality and responsible working conditions — clean, well-organized workspaces with skilled, engaged teams.</div></div></div>
+        <div class="pillar reveal rd1"><div class="pillar-dot"></div><div><div class="pillar-title">Our Factories</div><div class="pillar-desc">Supporting large-scale programs and smaller emerging brands with comprehensive production capabilities — dyeing, sampling, embroidery, printing — with daily output exceeding 147,000 pieces.</div></div></div>
+        <div class="pillar reveal rd2"><div class="pillar-dot"></div><div><div class="pillar-title">Our People</div><div class="pillar-desc">Committed to fair wages, safe working conditions, and responsible workplace practices across our entire global manufacturing network.</div></div></div>
       </div>
-      <div class="certs reveal">
-        <div class="cert-text-badge">Anti-Slavery<br>Commitment</div>
-        <div class="cert-text-badge">Accord Fire &amp;<br>Building Safety</div>
-        <div class="cert-text-badge">WRAP Gold<br>Certified</div>
-        <div class="cert-text-badge">Fair Labor<br>Association</div>
+      <div class="certs reveal rd3">
+        <div class="cert-badge">Anti-Slavery<br>Commitment</div>
+        <div class="cert-badge">Accord Fire &amp;<br>Building Safety</div>
+        <div class="cert-badge">WRAP Gold<br>Certified</div>
+        <div class="cert-badge">Fair Labor<br>Association</div>
       </div>
     </div>
   </div>
@@ -1475,63 +551,63 @@
 <!-- FACTORIES -->
 <section id="factories">
   <div class="section-tag reveal">Our Operations</div>
-  <h2 class="section-heading reveal reveal-delay-1">Our <em>Factories</em></h2>
+  <h2 class="section-heading reveal rd1">Our <em>Factories</em></h2>
   <div class="factories-grid">
     <div class="factory-card reveal">
       <div class="factory-flag">🇰🇭 Cambodia</div>
       <div class="factory-name">Ealytex (Cambodia) Garment Co., Ltd</div>
-      <div class="factory-stats">
-        <div class="f-stat"><span class="f-stat-key">Established</span><span class="f-stat-val">2013</span></div>
-        <div class="f-stat"><span class="f-stat-key">Monthly Capacity</span><span class="f-stat-val">~2.26M pieces</span></div>
-        <div class="f-stat"><span class="f-stat-key">Workers</span><span class="f-stat-val">3,113</span></div>
-        <div class="f-stat"><span class="f-stat-key">Production Lines</span><span class="f-stat-val">57</span></div>
-        <div class="f-stat"><span class="f-stat-key">Certification</span><span class="f-stat-val">WRAP Gold</span></div>
+      <div class="f-stats">
+        <div class="f-stat"><span class="f-key">Established</span><span class="f-val">2013</span></div>
+        <div class="f-stat"><span class="f-key">Monthly Capacity</span><span class="f-val">~2.26M pieces</span></div>
+        <div class="f-stat"><span class="f-key">Workers</span><span class="f-val">3,113</span></div>
+        <div class="f-stat"><span class="f-key">Production Lines</span><span class="f-val">57</span></div>
+        <div class="f-stat"><span class="f-key">Certification</span><span class="f-val">WRAP Gold</span></div>
       </div>
       <div class="factory-desc">Approved by Walmart, Costco (GMP), and PVH. Exporting to the United States, Europe, and Canada.</div>
     </div>
-    <div class="factory-card reveal reveal-delay-1">
+    <div class="factory-card reveal rd1">
       <div class="factory-flag">🇰🇭 Cambodia</div>
       <div class="factory-name">Ealysocks Cambodia Manufacture Co., Ltd</div>
-      <div class="factory-stats">
-        <div class="f-stat"><span class="f-stat-key">Established</span><span class="f-stat-val">2023</span></div>
-        <div class="f-stat"><span class="f-stat-key">Monthly Capacity</span><span class="f-stat-val">~1.8M pairs</span></div>
-        <div class="f-stat"><span class="f-stat-key">Machine Lines</span><span class="f-stat-val">216</span></div>
-        <div class="f-stat"><span class="f-stat-key">Workers</span><span class="f-stat-val">49</span></div>
+      <div class="f-stats">
+        <div class="f-stat"><span class="f-key">Established</span><span class="f-val">2023</span></div>
+        <div class="f-stat"><span class="f-key">Monthly Capacity</span><span class="f-val">~1.8M pairs</span></div>
+        <div class="f-stat"><span class="f-key">Machine Lines</span><span class="f-val">216</span></div>
+        <div class="f-stat"><span class="f-key">Workers</span><span class="f-val">49</span></div>
       </div>
-      <div class="factory-desc">State-of-the-art automation for high-volume production. Fabric manufacturing at 800 metric tons/month capacity.</div>
+      <div class="factory-desc">State-of-the-art automation for high-volume sock production with 800 metric tons/month fabric capacity.</div>
     </div>
-    <div class="factory-card reveal reveal-delay-2">
+    <div class="factory-card reveal rd2">
       <div class="factory-flag">🇰🇭 Cambodia</div>
       <div class="factory-name">Ealywear Cambodia Manufacture Co., Ltd</div>
-      <div class="factory-stats">
-        <div class="f-stat"><span class="f-stat-key">Established</span><span class="f-stat-val">2023</span></div>
-        <div class="f-stat"><span class="f-stat-key">Monthly Capacity</span><span class="f-stat-val">~360K pieces</span></div>
-        <div class="f-stat"><span class="f-stat-key">Workers</span><span class="f-stat-val">747</span></div>
-        <div class="f-stat"><span class="f-stat-key">Sewing Lines</span><span class="f-stat-val">14</span></div>
+      <div class="f-stats">
+        <div class="f-stat"><span class="f-key">Established</span><span class="f-val">2023</span></div>
+        <div class="f-stat"><span class="f-key">Monthly Capacity</span><span class="f-val">~360K pieces</span></div>
+        <div class="f-stat"><span class="f-key">Workers</span><span class="f-val">747</span></div>
+        <div class="f-stat"><span class="f-key">Sewing Lines</span><span class="f-val">14</span></div>
       </div>
       <div class="factory-desc">Exporting to the United States, Europe, and Japan with a growing production footprint.</div>
     </div>
   </div>
-  <div class="location-marquee">
-    <div class="location-marquee-track">
-      <span class="location-item"><span>New York</span> HQ · USA</span>
-      <span class="location-item"><span>Suzhou</span> Office · China</span>
-      <span class="location-item"><span>Shanghai</span> Office · China</span>
-      <span class="location-item"><span>London</span> Office · UK</span>
-      <span class="location-item"><span>Tokyo</span> Office · Japan</span>
-      <span class="location-item"><span>Vietnam</span> Office</span>
-      <span class="location-item"><span>Bangladesh</span> Office</span>
-      <span class="location-item"><span>India</span> Office</span>
-      <span class="location-item"><span>Cambodia</span> Factories</span>
-      <span class="location-item"><span>New York</span> HQ · USA</span>
-      <span class="location-item"><span>Suzhou</span> Office · China</span>
-      <span class="location-item"><span>Shanghai</span> Office · China</span>
-      <span class="location-item"><span>London</span> Office · UK</span>
-      <span class="location-item"><span>Tokyo</span> Office · Japan</span>
-      <span class="location-item"><span>Vietnam</span> Office</span>
-      <span class="location-item"><span>Bangladesh</span> Office</span>
-      <span class="location-item"><span>India</span> Office</span>
-      <span class="location-item"><span>Cambodia</span> Factories</span>
+  <div class="loc-marquee">
+    <div class="loc-track">
+      <span class="loc-item"><em>New York</em> HQ · USA</span>
+      <span class="loc-item"><em>Suzhou</em> Office · China</span>
+      <span class="loc-item"><em>Shanghai</em> Office · China</span>
+      <span class="loc-item"><em>London</em> Office · UK</span>
+      <span class="loc-item"><em>Tokyo</em> Office · Japan</span>
+      <span class="loc-item"><em>Vietnam</em> Office</span>
+      <span class="loc-item"><em>Cambodia</em> Factories</span>
+      <span class="loc-item"><em>Kenya</em> MFG Site</span>
+      <span class="loc-item"><em>Egypt</em> MFG Site</span>
+      <span class="loc-item"><em>New York</em> HQ · USA</span>
+      <span class="loc-item"><em>Suzhou</em> Office · China</span>
+      <span class="loc-item"><em>Shanghai</em> Office · China</span>
+      <span class="loc-item"><em>London</em> Office · UK</span>
+      <span class="loc-item"><em>Tokyo</em> Office · Japan</span>
+      <span class="loc-item"><em>Vietnam</em> Office</span>
+      <span class="loc-item"><em>Cambodia</em> Factories</span>
+      <span class="loc-item"><em>Kenya</em> MFG Site</span>
+      <span class="loc-item"><em>Egypt</em> MFG Site</span>
     </div>
   </div>
 </section>
@@ -1539,48 +615,22 @@
 <!-- CONTACT -->
 <section id="contact">
   <div class="section-tag reveal">Get In Touch</div>
-  <h2 class="section-heading reveal reveal-delay-1" style="color: var(--ink);">We'd Love to <em>Hear</em> From You</h2>
+  <h2 class="section-heading reveal rd1">We'd Love to <em>Hear</em> From You</h2>
   <div class="contact-layout">
     <div class="contact-info">
-      <div class="contact-item reveal">
-        <div class="contact-label">Email</div>
-        <div class="contact-val"><a href="/cdn-cgi/l/email-protection#61080f070e2104000d181504194f020e0c"><span class="__cf_email__" data-cfemail="177e7971785772767b6e63726f3974787a">[email&#160;protected]</span></a></div>
-      </div>
-      <div class="contact-item reveal reveal-delay-1">
-        <div class="contact-label">Phone</div>
-        <div class="contact-val"><a href="tel:+12129679888">+1 (212) 967-9888</a></div>
-      </div>
-      <div class="contact-item reveal reveal-delay-2">
-        <div class="contact-label">Website</div>
-        <div class="contact-val"><a href="http://www.ealytexglobalinc.com">www.ealytexglobalinc.com</a></div>
-      </div>
+      <div class="reveal"><div class="c-label">Email</div><div class="c-val"><a href="mailto:info@ealytex.com">info@ealytex.com</a></div></div>
+      <div class="reveal rd1"><div class="c-label">Phone</div><div class="c-val"><a href="tel:+12129679888">+1 (212) 967-9888</a></div></div>
+      <div class="reveal rd2"><div class="c-label">Website</div><div class="c-val"><a href="http://www.ealytexglobalinc.com">www.ealytexglobalinc.com</a></div></div>
     </div>
-    <div class="offices-grid reveal reveal-delay-1">
-      <div class="office">
-        <div class="office-city">New York</div>
-        <div class="office-addr">225 W. 39th St, 8th Floor<br>New York, NY 10018</div>
-        <div class="office-tel">+1 (212) 967-9888</div>
-      </div>
-      <div class="office">
-        <div class="office-city">Suzhou</div>
-        <div class="office-addr">5/F, Building 2, Ruilene Industrial Park<br>Zijing Road, Mudu Town<br>Suzhou 215101, China</div>
-        <div class="office-tel">+86 512-65577163</div>
-      </div>
-      <div class="office">
-        <div class="office-city">Shanghai</div>
-        <div class="office-addr">Room 1706–1707, Building A<br>SOHO Zhongshan Plaza<br>No. 1055, West Zhongshan Rd</div>
-        <div class="office-tel">+86 21-60393858</div>
-      </div>
-      <div class="office" style="background: rgba(184,154,106,0.05); border-color: rgba(184,154,106,0.3);">
-        <div class="office-city">Global</div>
-        <div class="office-addr">London · Tokyo · Vietnam<br>Cambodia · Kenya · Egypt</div>
-        <div class="office-tel" style="color: #8a7a60;">Contact us for details</div>
-      </div>
+    <div class="offices-grid reveal rd1">
+      <div class="office"><div class="office-city">New York</div><div class="office-addr">225 W. 39th St, 8th Floor<br>New York, NY 10018</div><div class="office-tel">+1 (212) 967-9888</div></div>
+      <div class="office"><div class="office-city">Suzhou</div><div class="office-addr">5/F, Building 2, Ruilene Industrial Park<br>Zijing Road, Mudu Town<br>Suzhou 215101, China</div><div class="office-tel">+86 512-65577163</div></div>
+      <div class="office"><div class="office-city">Shanghai</div><div class="office-addr">Room 1706–1707, Building A<br>SOHO Zhongshan Plaza<br>No. 1055, West Zhongshan Rd</div><div class="office-tel">+86 21-60393858</div></div>
+      <div class="office" style="background:rgba(184,154,106,0.05);"><div class="office-city">Global</div><div class="office-addr">London · Tokyo · Vietnam<br>Cambodia · Kenya · Egypt</div><div class="office-tel" style="color:#8a7a60;">Contact us for details</div></div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-logo">EALYTEX<span>.</span></div>
   <p class="footer-copy">© 2026 Ealytex Global Inc. All rights reserved.</p>
@@ -1591,52 +641,31 @@
   </ul>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-    ring.style.left = e.clientX + 'px';
-    ring.style.top = e.clientY + 'px';
-  });
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      ring.style.width = '56px';
-      ring.style.height = '56px';
-      ring.style.borderColor = 'rgba(184,154,106,0.8)';
-      cursor.style.transform = 'translate(-50%, -50%) scale(2)';
-    });
-    el.addEventListener('mouseleave', () => {
-      ring.style.width = '36px';
-      ring.style.height = '36px';
-      ring.style.borderColor = 'rgba(184,154,106,0.5)';
-      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-    });
-  });
-
+<script>
   // Nav scroll
-  const nav = document.getElementById('mainNav');
+  const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
-  });
-
-  // Hero bg animate on load
-  const hero = document.getElementById('hero');
-  setTimeout(() => hero.classList.add('loaded'), 100);
+  }, { passive: true });
 
   // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+  function reveal() {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight - 50) {
+        el.classList.add('visible');
       }
     });
-  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
-  reveals.forEach(el => observer.observe(el));
+  }
+  window.addEventListener('scroll', reveal, { passive: true });
+  reveal();
+  setTimeout(reveal, 200);
+  setTimeout(reveal, 600);
 
-  // Parallax subtle on hero text
-  wi
+  // Hero parallax
+  window.addEventListener('scroll', () => {
+    const bg = document.querySelector('.hero-bg');
+    if (bg) bg.style.transform = 'translateY(' + (window.scrollY * 0.2) + 'px)';
+  }, { passive: true });
+</script>
+</body>
+</html>
