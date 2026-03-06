@@ -107,10 +107,10 @@ nav.scrolled {
   opacity: 0; animation: fadeUp 0.8s ease 1.8s forwards;
 }
 .scroll-line { width: 48px; height: 1px; background: var(--gold); }
-.hero-stat-bar { position: absolute; bottom: 48px; right: 56px; display: flex; gap: 48px; opacity: 0; animation: fadeUp 0.8s ease 1.6s forwards; }
+.hero-stat-bar { position: absolute; bottom: 48px; right: 56px; display: flex; gap: 64px; opacity: 0; animation: fadeUp 0.8s ease 1.6s forwards; }
 .stat-item { text-align: right; }
-.stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 0.05em; color: var(--gold); display: block; }
-.stat-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash); }
+.stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 56px; letter-spacing: 0.05em; color: var(--gold); display: block; line-height: 1; }
+.stat-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash); margin-top: 4px; display: block; }
 
 /* TICKER */
 .ticker-wrap { background: var(--gold); overflow: hidden; padding: 14px 0; }
@@ -136,7 +136,7 @@ section { padding: 140px 56px; }
 
 /* ABOUT */
 #about { background: var(--dark-mid); }
-.about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: center; max-width: 1280px; }
+.about-grid { display: grid; grid-template-columns: 0.8fr 1.8fr; gap: 80px; align-items: center; max-width: 1280px; margin: 0 auto; }
 .about-graphic-wrap { height: 580px; border: 1px solid rgba(184,154,106,0.12); position: relative; overflow: hidden; background: linear-gradient(135deg, #111009 0%, #0f0d0a 100%); display: flex; align-items: center; justify-content: center; }
 .about-graphic-wrap::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(184,154,106,0.07) 1px, transparent 1px); background-size: 32px 32px; }
 .about-graphic-wrap::after { content: ''; position: absolute; top: -1px; left: 40px; right: 40px; height: 2px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
@@ -150,7 +150,7 @@ section { padding: 140px 56px; }
 .ag-stat { background: rgba(10,10,10,0.6); padding: 22px 16px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .ag-stat span { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--gold); line-height: 1; }
 .ag-stat small { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash); }
-.about-text p { font-size: 15px; line-height: 1.85; color: rgba(242,237,230,0.65); margin-bottom: 20px; }
+.about-text p { font-size: 16px; line-height: 1.9; color: rgba(242,237,230,0.65); margin-bottom: 24px; }
 .about-text p strong { color: var(--bone); font-weight: 500; }
 
 /* CLIENTS */
@@ -176,14 +176,14 @@ section { padding: 140px 56px; }
 .adv-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.5s cubic-bezier(0.16,1,0.3,1); }
 .adv-card:hover::before { transform: scaleX(1); }
 .adv-card:hover { background: #ede8de; }
-.adv-num { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: rgba(0,0,0,0.06); line-height: 1; margin-bottom: 14px; transition: color 0.4s; }
-.adv-card:hover .adv-num { color: rgba(184,154,106,0.18); }
-.adv-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; margin-bottom: 12px; }
-.adv-desc { font-size: 13px; line-height: 1.75; color: rgba(10,10,10,0.55); }
+.adv-num { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: rgba(0,0,0,0.18); line-height: 1; margin-bottom: 14px; transition: color 0.4s; }
+.adv-card:hover .adv-num { color: rgba(184,154,106,0.35); }
+.adv-title { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; margin-bottom: 14px; }
+.adv-desc { font-size: 15px; line-height: 1.8; color: rgba(10,10,10,0.65); }
 .stats-band { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 2px; background: rgba(0,0,0,0.08); }
-.stat-block { background: var(--ink); color: var(--bone); padding: 48px 36px; text-align: center; }
-.stat-block .num { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: var(--gold); display: block; line-height: 1; }
-.stat-block .lbl { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash); display: block; margin-top: 8px; }
+.stat-block { background: var(--ink); color: var(--bone); padding: 52px 36px; text-align: center; }
+.stat-block .num { font-family: 'Bebas Neue', sans-serif; font-size: 72px; color: var(--gold); display: block; line-height: 1; }
+.stat-block .lbl { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash); display: block; margin-top: 10px; }
 
 /* SERVICES */
 #services { background: var(--dark-mid); }
@@ -211,13 +211,13 @@ section { padding: 140px 56px; }
 .products-head { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; margin-bottom: 60px; }
 .products-sub { font-size: 14px; line-height: 1.8; color: rgba(242,237,230,0.5); }
 .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(184,154,106,0.08); }
-.product-card { position: relative; aspect-ratio: 3/4; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+.product-card { position: relative; aspect-ratio: 4/3; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
 .product-bg { position: absolute; inset: 0; }
-.product-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 4.5vw, 60px); color: rgba(242,237,230,0.12); letter-spacing: 0.05em; pointer-events: none; }
-.product-cat { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 6px; }
-.product-name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; line-height: 1.15; color: #ffffff; }
-.product-desc { font-size: 13px; color: rgba(242,237,230,0.85); line-height: 1.6; margin-top: 8px; }
-.product-info { position: relative; z-index: 1; padding: 28px; background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.3) 60%, transparent 100%); }
+.product-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: clamp(28px, 3.5vw, 48px); color: rgba(242,237,230,0.1); letter-spacing: 0.05em; pointer-events: none; }
+.product-cat { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 8px; }
+.product-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; line-height: 1.15; color: #ffffff; }
+.product-desc { font-size: 14px; color: rgba(242,237,230,0.92); line-height: 1.65; margin-top: 10px; }
+.product-info { position: relative; z-index: 1; padding: 32px; background: linear-gradient(to top, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.5) 60%, transparent 100%); }
 /* ETHICS */
 #ethics { background: var(--dark-mid); overflow: hidden; }
 .ethics-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
@@ -228,8 +228,8 @@ section { padding: 140px 56px; }
 .pillar { padding: 26px 0; border-bottom: 1px solid rgba(184,154,106,0.12); display: grid; grid-template-columns: 20px 1fr; gap: 20px; align-items: start; }
 .pillar:first-of-type { border-top: 1px solid rgba(184,154,106,0.12); }
 .pillar-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; margin-top: 7px; }
-.pillar-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; margin-bottom: 8px; }
-.pillar-desc { font-size: 13px; line-height: 1.7; color: rgba(242,237,230,0.5); }
+.pillar-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; margin-bottom: 10px; }
+.pillar-desc { font-size: 15px; line-height: 1.8; color: rgba(242,237,230,0.7); }
 .certs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 44px; padding-top: 36px; border-top: 1px solid rgba(184,154,106,0.12); }
 .cert-badge { padding: 16px 18px; border: 1px solid rgba(184,154,106,0.4); font-size: 11px; line-height: 1.5; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); text-align: center; transition: border-color 0.3s, background 0.3s; cursor: default; background: rgba(184,154,106,0.05); font-weight: 400; }
 .cert-badge:hover { border-color: var(--gold); background: rgba(184,154,106,0.12); color: var(--bone); }
@@ -258,16 +258,16 @@ section { padding: 140px 56px; }
 #contact .section-heading em { color: #8a7a60; }
 .contact-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 100px; margin-top: 64px; }
 .contact-info { display: flex; flex-direction: column; gap: 36px; }
-.c-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: #7a6a50; margin-bottom: 6px; }
-.c-val { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--ink); }
+.c-label { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: #7a6a50; margin-bottom: 8px; }
+.c-val { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--ink); }
 .c-val a { color: inherit; text-decoration: none; transition: color 0.3s; }
 .c-val a:hover { color: #8a7a60; }
 .offices-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: rgba(0,0,0,0.08); }
-.office { background: var(--cream); padding: 36px; transition: background 0.3s, border-color 0.3s; border: 1px solid transparent; }
+.office { background: var(--cream); padding: 40px; transition: background 0.3s, border-color 0.3s; border: 1px solid transparent; }
 .office:hover { background: #ede8de; border-color: rgba(184,154,106,0.3); }
-.office-city { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.1em; margin-bottom: 12px; color: var(--ink); }
-.office-addr { font-size: 14px; line-height: 1.85; color: rgba(10,10,10,0.6); }
-.office-tel { font-size: 14px; color: #8a7a60; margin-top: 10px; font-weight: 400; }
+.office-city { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 0.1em; margin-bottom: 14px; color: var(--ink); }
+.office-addr { font-size: 15px; line-height: 1.9; color: rgba(10,10,10,0.65); }
+.office-tel { font-size: 15px; color: #8a7a60; margin-top: 12px; font-weight: 400; }
 
 /* FOOTER */
 footer { background: var(--ink); padding: 48px 56px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(184,154,106,0.15); flex-wrap: wrap; gap: 20px; }
@@ -339,7 +339,7 @@ footer { background: var(--ink); padding: 48px 56px; display: flex; align-items:
     <div class="about-graphic-wrap reveal">
       <div class="ag-inner">
         <span class="ag-est">Est.</span>
-        <span class="ag-year">2020</span>
+        <span class="ag-year">2016</span>
         <span class="ag-city">New York City</span>
         <div class="ag-line"></div>
         <span class="ag-tagline">Garment District</span>
@@ -355,7 +355,7 @@ footer { background: var(--ink); padding: 48px 56px; display: flex; align-items:
       <div class="section-tag reveal">Our Story</div>
       <h2 class="section-heading reveal rd1">The Partner <em>Behind</em> the Brand</h2>
       <div class="divider reveal rd2"></div>
-      <p class="reveal rd2">Founded in 2020, <strong>Ealytex Global Inc.</strong> is a U.S.-based fashion manufacturer headquartered in the heart of New York City's garment district. We operate as a fully integrated partner — bringing design, development, and production together to support brands from concept through execution.</p>
+      <p class="reveal rd2">Founded in 2016, <strong>Ealytex Global Inc.</strong> is a U.S.-based fashion manufacturer headquartered in the heart of New York City's garment district. We operate as a fully integrated partner — bringing design, development, and production together to support brands from concept through execution.</p>
       <p class="reveal rd3">Over the years, we've partnered with some of the most recognized names in global retail including <strong>Costco, Walmart, Amazon, and Target.</strong></p>
       <p class="reveal rd3">As niche-focused marketers with hands-on design and development expertise, we move quickly to identify emerging trends and strategically align product assortments to evolving consumer demand.</p>
       <a href="#contact" class="btn-primary reveal rd4" style="margin-top:16px;">Work With Us</a>
@@ -385,9 +385,7 @@ footer { background: var(--ink); padding: 48px 56px; display: flex; align-items:
       <div class="logo-slide"><img src="Ross_Stores_logo.svg-removebg-preview.png" alt="Ross"></div>
       <div class="logo-slide"><img src="TJ_Maxx_Logo.svg-removebg-preview.png" alt="TJ Maxx"></div>
       <div class="logo-slide"><img src="Macy_s_Logo_2019-removebg-preview.png" alt="Macy's"></div>
-      <div class="logo-slide"><img src="nordstrom-2-logo-png-transparent-removebg-preview.png" alt="Nordstrom"></div>
       <div class="logo-slide"><img src="Neiman_Marcus_logo_black.svg-removebg-preview.png" alt="Neiman Marcus"></div>
-      <div class="logo-slide"><img src="bloomingdales-logo-png-transparent-removebg-preview.png" alt="Bloomingdale's"></div>
       <div class="logo-slide"><img src="Calvin-Klein-Logo-1992-removebg-preview.png" alt="Calvin Klein"></div>
       <div class="logo-slide"><img src="tommy_hilfiger-logo_brandlogos.net_z9xcn-512x344-removebg-preview.png" alt="Tommy Hilfiger"></div>
       <div class="logo-slide"><img src="New_Balance_logo.svg-removebg-preview.png" alt="New Balance"></div>
@@ -398,7 +396,6 @@ footer { background: var(--ink); padding: 48px 56px; display: flex; align-items:
       <div class="logo-slide"><img src="Cirque-du-Soleil-logo-removebg-preview.png" alt="Cirque du Soleil"></div>
       <div class="logo-slide"><img src="Gap-Logo-PNG-Photo-removebg-preview.png" alt="Gap"></div>
       <div class="logo-slide"><img src="lord-taylor-logo-png-transparent-removebg-preview.png" alt="Lord &amp; Taylor"></div>
-      <div class="logo-slide"><img src="anne-klein-1-logo-png-transparent-removebg-preview.png" alt="Anne Klein"></div>
       <div class="logo-slide"><img src="United-Colors-of-Benetton-Logo-1977-removebg-preview.png" alt="Benetton"></div>
       <div class="logo-slide"><img src="frank-and-oak-seeklogo-removebg-preview.png" alt="Frank And Oak"></div>
       <div class="logo-slide"><img src="jockey-logo-black-and-white-removebg-preview.png" alt="Jockey"></div>
@@ -417,9 +414,7 @@ footer { background: var(--ink); padding: 48px 56px; display: flex; align-items:
       <div class="logo-slide"><img src="Ross_Stores_logo.svg-removebg-preview.png" alt="Ross"></div>
       <div class="logo-slide"><img src="TJ_Maxx_Logo.svg-removebg-preview.png" alt="TJ Maxx"></div>
       <div class="logo-slide"><img src="Macy_s_Logo_2019-removebg-preview.png" alt="Macy's"></div>
-      <div class="logo-slide"><img src="nordstrom-2-logo-png-transparent-removebg-preview.png" alt="Nordstrom"></div>
       <div class="logo-slide"><img src="Neiman_Marcus_logo_black.svg-removebg-preview.png" alt="Neiman Marcus"></div>
-      <div class="logo-slide"><img src="bloomingdales-logo-png-transparent-removebg-preview.png" alt="Bloomingdale's"></div>
       <div class="logo-slide"><img src="Calvin-Klein-Logo-1992-removebg-preview.png" alt="Calvin Klein"></div>
       <div class="logo-slide"><img src="tommy_hilfiger-logo_brandlogos.net_z9xcn-512x344-removebg-preview.png" alt="Tommy Hilfiger"></div>
       <div class="logo-slide"><img src="New_Balance_logo.svg-removebg-preview.png" alt="New Balance"></div>
@@ -430,7 +425,6 @@ footer { background: var(--ink); padding: 48px 56px; display: flex; align-items:
       <div class="logo-slide"><img src="Cirque-du-Soleil-logo-removebg-preview.png" alt="Cirque du Soleil"></div>
       <div class="logo-slide"><img src="Gap-Logo-PNG-Photo-removebg-preview.png" alt="Gap"></div>
       <div class="logo-slide"><img src="lord-taylor-logo-png-transparent-removebg-preview.png" alt="Lord &amp; Taylor"></div>
-      <div class="logo-slide"><img src="anne-klein-1-logo-png-transparent-removebg-preview.png" alt="Anne Klein"></div>
       <div class="logo-slide"><img src="United-Colors-of-Benetton-Logo-1977-removebg-preview.png" alt="Benetton"></div>
       <div class="logo-slide"><img src="frank-and-oak-seeklogo-removebg-preview.png" alt="Frank And Oak"></div>
       <div class="logo-slide"><img src="jockey-logo-black-and-white-removebg-preview.png" alt="Jockey"></div>
@@ -647,12 +641,13 @@ footer { background: var(--ink); padding: 48px 56px; display: flex; align-items:
 </footer>
 
 <script>
+  // Nav scroll effect
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 
-  // Scroll reveal — IntersectionObserver is way more reliable than scroll events
+  // Scroll reveal
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -660,6 +655,7 @@ footer { background: var(--ink); padding: 48px 56px; display: flex; align-items:
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.12 });
 
-  document.querySelectorAll('.reveal').forEach(el => revealObserv
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
